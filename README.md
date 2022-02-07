@@ -1,1 +1,1 @@
-# FitnessApp
+# BruinFit
