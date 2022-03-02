@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import './SignUp.css'
 import db from "./../firebase";
 
 class SignUp extends Component
