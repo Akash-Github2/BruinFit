@@ -1,9 +1,5 @@
 .NavbarItems{
-<<<<<<< HEAD
     background: linear-gradient(90deg, rgb(110, 94, 254) 0%, white 100%);
-=======
-    background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73,63,252,1) 100%);
->>>>>>> d20af01fbedab1df9ff7974add0845d59755a1ce
     height: 80px;
     display: flex;
     justify-content: center;
@@ -38,11 +34,7 @@
 }
 
 .nav-links:hover {
-<<<<<<< HEAD
     background-color: white;
-=======
-    background-color: #6d76f7;
->>>>>>> d20af01fbedab1df9ff7974add0845d59755a1ce
     border-radius: 4px;
     transition: all 0.2s ease-out;
 }
