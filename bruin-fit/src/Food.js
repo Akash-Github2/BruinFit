@@ -4,6 +4,7 @@ import data from "./mock-data.json";
 import { nanoid } from 'nanoid';
 import ReadOnlyRow from './components/ReadOnlyRow';
 import EditableRow from './components/EditableRow';
+import './Food.css';
 
 
 
@@ -91,7 +92,7 @@ const Food = () =>
     return(
         
         <div className= "app-container">
-            <h1>Food Tracking</h1>
+            <h1>Food Tracking Table</h1>
             <form>
             <table>
                 <thead>
@@ -151,6 +152,9 @@ const Food = () =>
             </form>
            
         </div>
+
+
+                                
     )
 }
 

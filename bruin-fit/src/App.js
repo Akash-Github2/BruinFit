@@ -1,9 +1,15 @@
 import React from 'react';
 import Navbar from "./components/Navbar/Navbar";
 import './App.css';
-import { Routes, Router, Route } from 'react-router-dom';
+import { Route, Router, Routes} from 'react-router-dom';
+import Switch from "react-switch";
 import Home from './Home'
 import Food from './Food'
+import Fitness from './Fitness'
+import Friends from './Friends'
+
+
+
 
 
 
@@ -11,21 +17,14 @@ import Food from './Food'
 
 function App() {
   return (
-       <div className='App'>
-    
-    {/* <Router>  */}
-      <Navbar />
-      {/* <Routes>
-        <Route path='/' exact component={Home} />
-        <Route path='/food' component={Food} />
-        <Route path='/fitness' component={Fitness} />
-        <Route path='/friends' component={Friends} />
-        <Route path='/signup' component={SignUp} />
-      </Routes>
-    </Router> */}
-      
-
-        </div>
+    <div className='App'>
+     <Navbar/>
+        <Routes>
+           { /*<Route exact path="/" component={Navbar} />*/}
+  <Route exact path="food-fitness" element= {<><Food/><Food/></>}/>
+  <Route exact path="friends" element= {<Friends/>}/>
+        </Routes>
+    </div>
       
   );
 }
