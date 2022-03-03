@@ -21,7 +21,7 @@ function App() {
      <Navbar/>
         <Routes>
            { /*<Route exact path="/" component={Navbar} />*/}
-  <Route exact path="food-fitness" element= {<><Food/><Food/></>}/>
+  <Route exact path="food-fitness" element= {<><Food/><Fitness/></>}/>
   <Route exact path="friends" element= {<Friends/>}/>
         </Routes>
     </div>

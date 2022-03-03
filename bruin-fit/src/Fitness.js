@@ -1,9 +1,10 @@
 import React, { useState, Fragment } from 'react';
 import './App.css';
-import data from "./mock-data.json";
+import data from "./mock-data-fitness.json";
 import { nanoid } from 'nanoid';
-import ReadOnlyRow from './components/ReadOnlyRow';
-import EditableRow from './components/EditableRow';
+import ReadOnlyRowFit from './ReadOnlyRowFit';
+import EditableRowFit from './EditableRowFit';
+import './Fitness.css';
 
 
 
@@ -13,14 +14,16 @@ const Fitness = () =>
     const [contacts, setContacts] = useState(data);
     const [addFormData, setAddFormData] = useState({
        date: '',
-       food: '',
+       exercise: '',
+       time: '',
        calories: '',
 
     });
 
     const [editFormData, setEditFormData] = useState({
         date: '',
-       food: '',
+       exercise: '',
+       time: '',
        calories: '',
     });
 
@@ -56,7 +59,8 @@ const Fitness = () =>
         const newContact = {
             id: nanoid(),
             date: addFormData.date,
-            food: addFormData.food,
+            exercise: addFormData.exercise,
+            time: addFormData.time,
             calories: addFormData.calories,
 
         };
@@ -76,7 +80,8 @@ const Fitness = () =>
 
         const formValues = {
             date: contact.date,
-            food: contact.food,
+            exercise: contact.exercise,
+            time: contact.time,
             calories: contact.calories,
 
         };
@@ -91,13 +96,14 @@ const Fitness = () =>
     return(
         
         <div className= "app-container">
-            <h1>Food Tracking Table</h1>
+            <h1>Fitness Tracking Table</h1>
             <form>
             <table>
                 <thead>
                     <tr>
                         <th> Date </th>
-                        <th> Food </th>
+                        <th> Exercise </th>
+                        <th> Time </th>
                         <th> Calories </th>
                         <th>Actions</th>
                     </tr>
@@ -106,12 +112,12 @@ const Fitness = () =>
                     {contacts.map((contact) => (
                         <Fragment>
                             { editContactId === contact.id ? (
-                            <EditableRow 
+                            <EditableRowFit 
                             editformData = {editFormData} 
                             handleEditformChange = {handleEditFormChange}
                             />
                             ) : ( 
-                            <ReadOnlyRow 
+                            <ReadOnlyRowFit
                             contact = {contact} 
                             handleEditClick = {handleEditClick}
                             />) }
@@ -123,7 +129,7 @@ const Fitness = () =>
                 </tbody>
             </table>
             </form>
-            <h2> Add a Food</h2>
+            <h2> Add an Exercise</h2>
             <form onSubmit= {handleAddFormSubmit}>
                 <input 
                     type = "text" 
@@ -134,12 +140,19 @@ const Fitness = () =>
                 />
                 <input 
                     type = "text" 
-                    name = "food" 
+                    name = "exercise" 
                     required = "required" 
-                    placeholder = "Enter food"
+                    placeholder = "Enter exercise"
                     onChange = {handleAddFormChange}
                 />
                 <input 
+                    type = "text" 
+                    name = "time" 
+                    required = "required" 
+                    placeholder = "Enter time"
+                    onChange = {handleAddFormChange}
+                />
+                 <input 
                     type = "text" 
                     name = "calories" 
                     required = "required" 
@@ -151,7 +164,7 @@ const Fitness = () =>
             </form>
            
         </div>
-            
+
 
                                 
     )

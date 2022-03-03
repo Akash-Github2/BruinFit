@@ -1,0 +1,40 @@
+[
+    {
+      "id": 1,
+      "date": "02/22/22",
+      "exercise": "lifting",
+      "time": "1hr",
+      "calories": "300"
+    },
+    {
+      "id": 2,
+      "date": "02/22/22",
+      "exercise": "cardio",
+      "time": "30min",
+      "calories": "400"
+    },
+    {
+      "id": 3,
+      "date": "02/22/22",
+      "exercise": "lifting",
+      "time": "2hr",
+      "calories": "500"
+    },
+    {
+      "id": 4,
+      "date": "02/23/22",
+      "exercise": "cardio",
+      "time": "1hr",
+      "calories": "500"
+
+    },
+    {
+      "id": 5,
+      "date": "02/23/22",
+      "exercise": "cardio",
+      "time": "2hr",
+      "calories": "250"
+
+    }
+
+  ]
