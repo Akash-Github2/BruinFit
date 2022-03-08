@@ -5,9 +5,19 @@ import { nanoid } from 'nanoid';
 import ReadOnlyRow from './components/ReadOnlyRow';
 import EditableRow from './components/EditableRow';
 import './Food.css';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "./firebase";
+import {
+    collection,
+    addDoc,
+    doc, 
+    setDoc
+  } from "firebase/firestore";
+import { async } from '@firebase/util';
 
-const Food = () => 
-{
+
+
+function Food() {
     const [contacts, setContacts] = useState(data);
     const [addFormData, setAddFormData] = useState({
        date: '',
@@ -34,6 +44,7 @@ const Food = () =>
         newFormData[fieldName] = fieldValue;
 
         setAddFormData(newFormData);
+
     };
 
     const handleEditFormChange = (event) => {
@@ -48,7 +59,7 @@ const Food = () =>
         setEditFormData(newFormData);
     };
 
-    const handleAddFormSubmit = (event) => {
+    const handleAddFormSubmit = async(event) => {
         event.preventDefault();
 
         const newContact = {
@@ -62,7 +73,20 @@ const Food = () =>
         const newContacts = [...contacts, newContact];
         setContacts(newContacts);
 
+        //Firebase stuff
 
+        try {
+
+            await addDoc(collection(db, "users", user.email, "data", "food", addFormData.date), {
+              foodName: addFormData.food,
+              calories: addFormData.calories,
+            });
+        
+          } catch (err) {
+            console.error(err);
+            alert(err.message);
+          }
+        
     };
 
     
@@ -82,7 +106,7 @@ const Food = () =>
         setEditFormData(formValues);
     };
 
-
+    const [user, loading, error] = useAuthState(auth);
 
     
 
@@ -90,6 +114,7 @@ const Food = () =>
         
         <div className= "app-container">
             <h1>Food Tracking Table</h1>
+            {/* <h1>{user.email}</h1> */}
             <form>
             <table>
                 <thead>
@@ -127,7 +152,7 @@ const Food = () =>
                     type = "text" 
                     name = "date" 
                     required = "required" 
-                    placeholder = "Enter date (MM/DD/YY)"
+                    placeholder = "Enter date (MM-DD-YY)"
                     onChange = {handleAddFormChange}
                 />
                 <input 
