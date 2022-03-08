@@ -6,8 +6,6 @@ import {Route, Routes, BrowserRouter} from 'react-router-dom';
 
 
 
-
-
 ReactDOM.render(
   <BrowserRouter>
     <App />

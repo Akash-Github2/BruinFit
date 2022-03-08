@@ -6,9 +6,6 @@ import ReadOnlyRow from './components/ReadOnlyRow';
 import EditableRow from './components/EditableRow';
 import './Food.css';
 
-
-
-
 const Food = () => 
 {
     const [contacts, setContacts] = useState(data);

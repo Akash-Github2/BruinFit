@@ -7,13 +7,7 @@ import Home from './Home'
 import Food from './Food'
 import Fitness from './Fitness'
 import Friends from './Friends'
-
-
-
-
-
-
-
+import Profile from './Profile'
 
 function App() {
   return (
@@ -29,14 +23,13 @@ function App() {
     //   </Router>
     // </div>
 
-
-
     <div className='App'>
      <Navbar/>
         <Routes>
            { /*<Route exact path="/" component={Navbar} />*/}
   <Route exact path="food-fitness" element= {<><Food/><Fitness/></>}/>
   <Route exact path="friends" element= {<Friends/>}/>
+  <Route exact path="profile" element= {<Profile/>}/>
         </Routes>
     </div>
       
