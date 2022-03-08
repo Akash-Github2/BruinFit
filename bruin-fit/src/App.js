@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Navbar from "./components/Navbar/Navbar";
 import './App.css';
@@ -37,6 +38,7 @@ function App() {
            { /*<Route exact path="/" component={Navbar} />*/}
   <Route exact path="food-fitness" element= {<><Food/><Fitness/></>}/>
   <Route exact path="friends" element= {<Friends/>}/>
+  <Route exact path="/" element= {<Home/>}/>
         </Routes>
     </div>
       

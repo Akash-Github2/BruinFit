@@ -1,0 +1,112 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+.create input, .create textarea, .create select {
+  width: 100px;
+  height: 100px;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+ 
+}
+
+
+.CalorieTracker {
+  width: 900px;  
+  height: 450px; 
+  margin-top: 55px;
+  margin-left: 50px;
+  background-color: white;
+  border: 20px solid  #f1356d; 
+  float: right;
+
+  font-size:20px;
+
+}
+
+
+
+.caloriesRemaining{ 
+  
+  width: 400;
+  text-align: center;
+  color: white; 
+  margin-top: 50px;
+  font-size: 100px; 
+  height: 500px; 
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color:  #8BB8E8; 
+
+
+
+}
+
+.calNum{
+
+  font-size: 60;
+  text-align: center;
+  color: black;
+  
+}
+
+.create button {
+  background: #f1356d;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+ 
+ 
+
+    .box{ 
+    
+      width: 50%;  
+      height: 500px; 
+      margin-top: 50px;
+      background-color: white;
+      border: 20px solid  #FFC72C; 
+      float:left;
+      margin-left: 20px;
+
+    }
+
+  
+  .title{
+    color: #FFC72C;
+    margin: 20px; 
+    font-size: 90px;
+    
+  }
+  .graphTitle{
+    color: #FFC72C;
+   margin-left: 10px;
+    font-size: 20px;
+    
+  }
+
+  .discription{
+    color: #FFC72C;
+    font-size: 30px;
+  }
+
+
+
+  .App {
+    font-family: sans-serif;
+    text-align: center;
+  }  
+  
+
+  
+ 
+ 
+ 
+ 
+
+
+  
+ 
+  
