@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const ReadOnlyRowFit = ({ contact, handleEditClick }) => {
+const ReadOnlyRowFit = ({ contact, handleEditClick, handleDeleteClick }) => {
     return (
         <tr>
             <td> {contact.date} </td>
@@ -12,6 +12,9 @@ const ReadOnlyRowFit = ({ contact, handleEditClick }) => {
                 <button type= "button" onClick={(event) => handleEditClick(event, contact)}
                 >
                     Edit
+                </button>
+                <button type="button" onClick={() => handleDeleteClick(contact.id)}>
+                    Delete
                 </button>
             </td>
         </tr>

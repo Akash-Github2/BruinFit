@@ -15,6 +15,7 @@ import Friends from './Friends'
 
 
 
+
 function App() {
   return (
 
@@ -37,6 +38,7 @@ function App() {
            { /*<Route exact path="/" component={Navbar} />*/}
   <Route exact path="food-fitness" element= {<><Food/><Fitness/></>}/>
   <Route exact path="friends" element= {<Friends/>}/>
+  
         </Routes>
     </div>
       

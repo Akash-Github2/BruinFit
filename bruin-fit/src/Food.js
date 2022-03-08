@@ -85,6 +85,16 @@ const Food = () =>
         setEditFormData(formValues);
     };
 
+    const handleDeleteClick = (contactId) => {
+        const newContacts = [...contacts];
+    
+        const index = contacts.findIndex((contact) => contact.id === contactId);
+    
+        newContacts.splice(index, 1);
+    
+        setContacts(newContacts);
+      };
+
 
 
     
@@ -93,6 +103,20 @@ const Food = () =>
         
         <div className= "app-container">
             <h1>Food Tracking Table</h1>
+            <h4>Search Date:</h4>
+            <form onSubmit= {handleAddFormSubmit}>
+                <input 
+                    type = "text" 
+                    name = "date" 
+                    required = "required" 
+                    placeholder = "Enter date (MM/DD/YY)"
+                    
+                />
+                
+               
+                <button type= "submit">Search</button>
+            </form>
+           
             <form>
             <table>
                 <thead>
@@ -115,6 +139,7 @@ const Food = () =>
                             <ReadOnlyRow 
                             contact = {contact} 
                             handleEditClick = {handleEditClick}
+                            handleDeleteClick={handleDeleteClick}
                             />) }
 
                         </Fragment>
