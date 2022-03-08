@@ -13,6 +13,8 @@ import {
   getFirestore,
   collection,
   addDoc,
+  doc, 
+  setDoc
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -31,22 +33,35 @@ const db = getFirestore(app);
 const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
+
   } catch (err) {
     console.error(err);
     alert(err.message);
   }
 };
 
-const registerWithEmailAndPassword = async (name, email, password) => {
+const registerWithEmailAndPassword = async (firstName, lastName, email, password, age, height, weight, weightGoal) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await addDoc(collection(db, "users"), {
+    // await addDoc(collection(db, "users"), {
+    //   uid: user.uid,
+    //   name,
+    //   email,
+    // });
+
+    await setDoc(doc(db, "users", email), {
       uid: user.uid,
-      name,
-      authProvider: "local",
-      email,
+      firstName: firstName,
+      lastName: lastName,
+      age: age,
+      height: height,
+      weight: weight,
+      weightGoal: weightGoal,
     });
+
+    await setDoc(doc(db, "users", email, "data", "food"), { });
+
   } catch (err) {
     console.error(err);
     alert(err.message);
