@@ -89,6 +89,16 @@ const Fitness = () =>
         setEditFormData(formValues);
     };
 
+    const handleDeleteClick = (contactId) => {
+        const newContacts = [...contacts];
+    
+        const index = contacts.findIndex((contact) => contact.id === contactId);
+    
+        newContacts.splice(index, 1);
+    
+        setContacts(newContacts);
+      };
+
 
 
     
@@ -97,6 +107,19 @@ const Fitness = () =>
         
         <div className= "app-container">
             <h1>Fitness Tracking Table</h1>
+            <h4>Search Date:</h4>
+            <form onSubmit= {handleAddFormSubmit}>
+                <input 
+                    type = "text" 
+                    name = "date" 
+                    required = "required" 
+                    placeholder = "Enter date (MM/DD/YY)"
+                    
+                />
+                
+               
+                <button type= "submit">Search</button>
+            </form>
             <form>
             <table>
                 <thead>
@@ -120,6 +143,7 @@ const Fitness = () =>
                             <ReadOnlyRowFit
                             contact = {contact} 
                             handleEditClick = {handleEditClick}
+                            handleDeleteClick={handleDeleteClick}
                             />) }
 
                         </Fragment>
