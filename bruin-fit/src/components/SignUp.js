@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import db from "./../firebase";
 
+//TODO: Make this the register class similar to login class (make sure login class is a bit different than the one online)
+
 class SignUp extends Component
 {
     constructor(props) {
