@@ -124,8 +124,9 @@ function Food() {
     return(
         
         <div className= "app-container">
-            <h1>Food Tracking Table</h1>
-            <h4>Search Date:</h4>
+
+            <h1 style={{color: "black"}}>Food Tracking Table</h1>
+            <h2>Search Date:</h2>
             <form onSubmit= {handleAddFormSubmit}>
                 <input 
                     type = "text" 

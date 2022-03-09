@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, registerWithEmailAndPassword } from "./../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import "./Register.css";
+import "./Login.css";
 
 function Register() {
   const [firstName, setFirstName] = useState("");
@@ -26,92 +26,109 @@ function Register() {
   }, [user, loading]);
 
   return (
-    <div>
-      <div>
-        <form onSubmit={(e) => {
+    <div className= 'center'>
+      <div className = 'auth'>
+        <h1>Create Your BruinFit Account!</h1>
+        {error && <div className='auth__error'>{error}</div>}
+        <form name ='register_form' onSubmit={(e) => {
               e.preventDefault();
               registerWithEmailAndPassword(firstName, lastName, email, password, age, height, weight, weightGoal);
             }
           }>
-          <div>
+          
             <input
               type="text"
               value={firstName}
+              required
+              placeholder= "First name"
               onChange={(e) => setFirstName(e.target.value)}
-              placeholder="First Name"
             />
-          </div>
+          
 
-          <div>
+          
             <input
               type="text"
               value={lastName}
+              required
+              placeholder = "Last Name"
               onChange={(e) => setLastName(e.target.value)}
-              placeholder="Last Name"
             />
-          </div>
+          
 
-          <div>
+      
             <input
               type="text"
               value={email}
+              required
+              placeholder = "Email"
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
             />
-          </div>
+  
 
-          <div>
+          
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              required
               placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
             />
-          </div>
+
 
           {/* const [age, setAge] = useState("");
   const [height, setHeight] = useState(""); //in inches
   const [weight, setWeight] = useState("");
   const [weightGoal, setWeightGoal] = useState(""); */}
 
-          <div>
+          
             <input
               type="text"
               value={age}
-              onChange={(e) => setAge(e.target.value)}
+              required
               placeholder="Age"
+              onChange={(e) => setAge(e.target.value)}
+              
             />
-          </div>
+         
 
-          <div>
+          
             <input
               type="text"
               value={height}
-              onChange={(e) => setHeight(e.target.value)}
+              required
               placeholder="Height"
+              onChange={(e) => setHeight(e.target.value)}
             />
-          </div>
+        
 
-          <div>
+        
             <input
               type="text"
               value={weight}
-              onChange={(e) => setWeight(e.target.value)}
+              required
               placeholder="Weight"
+              onChange={(e) => setWeight(e.target.value)}
+              
             />
-          </div>
+         
 
-          <div>
+         
             <input
               type="text"
               value={weightGoal}
-              onChange={(e) => setWeightGoal(e.target.value)}
+              required
               placeholder="Weight Goal"
+              onChange={(e) => setWeightGoal(e.target.value)}
+              
             />
-          </div>
+        
 
           <button type="submit">Register</button>
         </form>
+        <p>
+          Already have an account? 
+          <Link to='/'>Log in here</Link>
+        </p>
       </div>
     </div>
   );

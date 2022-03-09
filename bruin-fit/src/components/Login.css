@@ -1,0 +1,63 @@
+*{
+  box-sizing: border-box;
+}
+
+span{
+  display: block;
+}
+
+.center {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.auth{
+  width: 90%;
+  max-width: 400px;
+  border: 10px solid #0066EE;
+  padding: 20px;
+  text-align: center;
+}
+
+.auth form{
+display: flex;
+flex-direction: column;
+gap: 15px;
+margin: 0 auto 10px auto;
+}
+
+.auth__success{
+padding: 10px 0;
+background-color: hsl(147, 79%, 87%);
+margin-bottom: 20px;
+}
+
+.auth__error{
+padding: 10px 0;
+background-color: hsl(0, 79%, 87%);
+margin-bottom: 20px;
+}
+
+.auth form > input, button{
+height: 40px;
+font-size: 16px;
+padding: 0 10px;
+}
