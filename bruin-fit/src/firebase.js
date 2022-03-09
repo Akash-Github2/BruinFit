@@ -60,6 +60,8 @@ const registerWithEmailAndPassword = async (firstName, lastName, email, password
       weightGoal: weightGoal,
     });
 
+    await setDoc(doc(db, "users", email, "friends", "data"), { });
+
     // await setDoc(doc(db, "users", email, "data", "food"), { });
     // await setDoc(doc(db, "users", email, "data", "fitness"), { });
 
