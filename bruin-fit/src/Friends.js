@@ -138,6 +138,7 @@ const Friends= () =>
             <button className="btn btn-success" type="submit">Add </button>
             </form>
           
+          
           <br></br>
           <br></br>
           
