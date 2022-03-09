@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword } from "./../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
+
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,35 +20,36 @@ function Login() {
     }
   }, [user, loading]);
 
-  return (
-    <div>
-      <div>
-        <form onSubmit={(e) => {
-              e.preventDefault();
-              logInWithEmailAndPassword(email, password)
-            }
-          }>
-          <div>
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-            />
-          </div>
-          <button type="submit">Login</button>
-          <div>
-            Don't have an account? <Link to="/sign-up">Register</Link> now.
-          </div>
+  return(
+    <div className='center'>
+      <div className='auth'>
+        <h1>Log in to BruinFit!</h1>
+        {error && <div className='auth__error'>{error}</div>}
+        <form name='login_form' onSubmit={(e) => {
+            e.preventDefault();
+            logInWithEmailAndPassword(email, password)
+          }
+        }>
+          <input 
+            type='email' 
+            value={email}
+            required
+            placeholder="Enter your email"
+            onChange={e => setEmail(e.target.value)}/>
+
+          <input 
+            type='password'
+            value={password}
+            required
+            placeholder='Enter your password'
+            onChange={e => setPassword(e.target.value)}/>
+
+          <button type='submit'>Login</button>
         </form>
+        <p>
+          Don't have an account? 
+          <Link to='/sign-up'>Create one here</Link>
+        </p>
       </div>
     </div>
   );
