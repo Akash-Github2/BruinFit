@@ -1,7 +1,9 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import ReadOnlyFriends from './ReadOnlyFriends';
+import ReadOnlyIncomingFriends from './ReadOnlyIncomingFriends';
+import ReadOnlyOutgoingFriends from './ReadOnlyOutgoingFriends';
 import "./Fitness.css"
-import { nanoid } from 'nanoid';
+//import { nanoid } from 'nanoid';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./firebase";
 import {
@@ -18,6 +20,8 @@ function Friends() {
     const [addFormData, setAddFormData] = useState({
         friendName: '',
         actions: '',
+        outgoing: '',
+        incoming: '',
     });
 
     const handleAddFormChange = (event) => {
@@ -106,12 +110,22 @@ useEffect(() => {
           <h1> Welcome to the Friend's Page!</h1>
           <br></br>
           <br></br>
+<h2>Add a Friend</h2>
+            <form onSubmit={handleAddFormSubmit}>
+            <input
+              type="text"
+              name="friendName"
+              required = "required"
+              placeholder = "Enter a username"
+              onChange={handleAddFormChange}
+                />
 
-          <h2>
-             Your Friends: 
-          </h2>
+            <button className="btn btn-success" type="submit">Add </button>
+            </form>
+
+
+          <h2> Your Friends: </h2>
      
-        
           <form>
             <table>
             
@@ -139,22 +153,76 @@ useEffect(() => {
             </table>
             </form>
 
+              <br></br>
+                <br></br>
+                <br></br>
 
-          <h2>Add a Friend</h2>
-            <form onSubmit={handleAddFormSubmit}>
-            <input
-              type="text"
-              name="friendName"
-              required = "required"
-              placeholder = "Enter a username"
-              onChange={handleAddFormChange}
-                />
 
-            <button className="btn btn-success" type="submit">Add </button>
+        <h2> Incoming Requests: </h2>
+
+            <form>
+            <table>
+            
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Actions </th> 
+
+                </tr>
+            </thead>
+            <tbody>
+              {friendsItems.map((friendsItem) => (
+                 
+                <Fragment>
+                    <ReadOnlyIncomingFriends
+                          entry = {friendsItem}
+                          handleDeleteClick={handleDeleteClick}
+                          />
+
+                      </Fragment>
+                        
+                      ))}
+
+                  </tbody>
+            </table>
             </form>
-          
-          <br></br>
-          <br></br>
+
+                <br></br>
+                <br></br>
+                <br></br>
+
+
+           
+                <h2>Outgoing Friend Request</h2>
+                <form>
+            <table>
+            
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Actions </th> 
+                </tr>
+            </thead>
+            <tbody>
+              {friendsItems.map((friendsItem) => (
+                 
+                <Fragment>
+                    <ReadOnlyOutgoingFriends
+                          entry = {friendsItem}
+                          handleDeleteClick={handleDeleteClick}
+                          />
+
+                      </Fragment>
+                        
+                      ))}
+
+                  </tbody>
+            </table>
+            </form>
+        
+
+
+
           
       
     </div>
