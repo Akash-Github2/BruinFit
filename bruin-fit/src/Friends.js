@@ -1,26 +1,24 @@
-import React, {useState, Fragment } from 'react';
-import data from "./mock-data-friends.json";
+import React, { useState, Fragment, useEffect } from 'react';
 import ReadOnlyFriends from './ReadOnlyFriends';
-import EditableRowFriends from './EditableRowFriends';
 import "./Fitness.css"
 import { nanoid } from 'nanoid';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "./firebase";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDocs,
+  deleteDoc
+} from "firebase/firestore";
+import { async } from '@firebase/util';
 
 //creating a friendslist
-const Friends= () => 
-{
-  const [contacts, setContacts] = useState(data);
+function Friends() {
     const [addFormData, setAddFormData] = useState({
-        username: '',
+        friendName: '',
         actions: '',
-
     });
-
-    const [editFormData, setEditFormData] = useState({
-     username: '',
-     actions: '',
-  });
-
-  const [editContactId, setEditContactId] = useState(null);
 
     const handleAddFormChange = (event) => {
       event.preventDefault();
@@ -32,49 +30,74 @@ const Friends= () =>
         setAddFormData(newFormData);
     };
   
-    const handleEditFormChange = (event) => {
-      event.preventDefault();
+    const handleAddFormSubmit = async(event) => {
+        event.preventDefault();
+       
+         //Firebase stuff
+         try {
+          console.log(addFormData.friendName);
+          await addDoc(collection(db, "users", user.email, "friends"), {
+            friendName: addFormData.friendName
+          });
+      
+        } catch (err) {
+          console.error(err);
+          alert(err.message);
+        }
 
-      const fieldName = event.target.getAttribute('date');
-      const fieldValue = event.target.value;
+        const querySnapshot = await getDocs(collection(db, "users", user.email, "friends"));
+          const saveFirebaseTodos = [];
+          querySnapshot.forEach((doc) => {
+              const tempMap = doc.data();
+              tempMap["id"] = doc.id;
+              saveFirebaseTodos.push(tempMap);
+          });
 
-      const newFormData = { ...editFormData };
-      newFormData[fieldName] = fieldValue;
+          setFriendsItems(saveFirebaseTodos);
 
-      setEditFormData(newFormData);
-  };
-
-
-    const handleAddFormSubmit = (event) => {
-      event.preventDefault();
-    const newContact = {
-      id: nanoid(),
-      username: addFormData.username,
-      actions: addFormData.actions,
     };
 
-    const newContacts = [...contacts, newContact];
-        setContacts(newContacts);
+    const handleDeleteClick = async(entryID) => {
+      if (auth.currentUser) {
+          await deleteDoc(doc(db, "users", user.email, "friends", entryID));
+      }
 
-  };
+      const querySnapshot = await getDocs(collection(db, "users", user.email, "friends"));
+          const saveFirebaseTodos = [];
+          querySnapshot.forEach((doc) => {
+              const tempMap = doc.data();
+              tempMap["id"] = doc.id;
+              saveFirebaseTodos.push(tempMap);
+          });
 
-  const handleEditClick = (event, contact) => {
-    event.preventDefault();
-    setEditContactId(contact.id);
+          setFriendsItems(saveFirebaseTodos);
+    };
 
-  };
-
-  const handleDeleteClick = (contactId) => {
-    const newContacts = [...contacts];
-
-    const index = contacts.findIndex((contact)=> contact.id === contactId);
-    newContacts.splice(index, 1)
-
-    setContacts(newContacts);
-  }
+  const [user, loading, error] = useAuthState(auth);
+  const [friendsItems,setFriendsItems] = useState([]);
   
-  
-   
+  const fetchFriendsItems=async()=>{
+    if (auth.currentUser) {
+        
+        const querySnapshot = await getDocs(collection(db, "users", user.email, "friends"));
+        const saveFirebaseTodos = [];
+        querySnapshot.forEach((doc) => {
+            const tempMap = doc.data();
+            tempMap["id"] = doc.id;
+            console.log(doc.id, " => ", doc.data());
+            saveFirebaseTodos.push(tempMap);
+        });
+
+        setFriendsItems(saveFirebaseTodos);
+        
+        console.log("Food Items");
+        console.log(friendsItems); 
+    }
+}
+
+useEffect(() => {
+    fetchFriendsItems();
+}, [loading]);
 
 
   return (
@@ -100,27 +123,19 @@ const Friends= () =>
                 </tr>
             </thead>
             <tbody>
-              {contacts.map((contact) => (
+              {friendsItems.map((friendsItem) => (
                  
                 <Fragment>
-                            { editContactId === contact.id ? (
-                            <EditableRowFriends
-                            editformData = {editFormData} 
-                            handleEditformChange = {handleEditFormChange}
-                            />
-                            ) : ( 
-                            <ReadOnlyFriends
-                            contact = {contact} 
-                            handleEditClick = {handleEditClick}
-                            handleDeleteClick={handleDeleteClick}
-                            
-                            />) }
+                    <ReadOnlyFriends
+                          entry = {friendsItem}
+                          handleDeleteClick={handleDeleteClick}
+                          />
 
-                        </Fragment>
-                          
-                        ))}
+                      </Fragment>
+                        
+                      ))}
 
-                    </tbody>
+                  </tbody>
             </table>
             </form>
 
@@ -129,7 +144,7 @@ const Friends= () =>
             <form onSubmit={handleAddFormSubmit}>
             <input
               type="text"
-              name="username"
+              name="friendName"
               required = "required"
               placeholder = "Enter a username"
               onChange={handleAddFormChange}

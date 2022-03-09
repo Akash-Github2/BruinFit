@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 
 
 
-const ReadOnlyFriends = ({ contact, handleDeleteClick }) => {
+const ReadOnlyFriends = ({ entry, handleDeleteClick }) => {
     
 
         let navigate = useNavigate();
@@ -16,9 +16,9 @@ const ReadOnlyFriends = ({ contact, handleDeleteClick }) => {
 
     return (
         <tr>
-            <td> {contact.username} </td>
+            <td> {entry.friendName} </td>
             <td>
-                <button type="button" onClick={() => handleDeleteClick(contact.id)}>
+                <button type="button" onClick={() => handleDeleteClick(entry.id)}>
                     Unadd
                 </button>
 
