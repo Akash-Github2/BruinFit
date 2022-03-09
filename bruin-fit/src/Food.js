@@ -138,7 +138,7 @@ function Food() {
         <div className= "app-container">
             <h1>Email: { auth.currentUser ? user.email : ""} </h1>
             <h1>Food Tracking Table</h1>
-            <h4>Search Date:</h4>
+            <h2>Search Date:</h2>
             <form onSubmit= {handleFilter}>
                 <input 
                     type = "text" 
