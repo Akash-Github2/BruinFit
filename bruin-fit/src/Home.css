@@ -1,91 +1,173 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
+.yourFitnessSummaryUpdate{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 30px;
+  color: #f1356d;
+}
+
+
+
+.goalANDremaining{
+  margin-left: 200px;
+  font-size: 30px;
+  color: cadetblue;
+  padding: 20px;
+}
+
+.Date{
+  margin-left: 200px;
+  font-size: 30px;
+  color: #f1356d;
+
+
+}
+
+.yourDailyCalorieCount{
+  text-align: center;
+  color:cadetblue;
+
+}
+
+
+.Weight{
+  margin-left: 170px;
+  color: #f1356d;
+  font-size: 30px;
+
+}
+
+
+
+.goals{ 
+
+  width: 45%;  
+  height: 300px; 
+  background-color: white;
+  border: 20px solid  #f1356d; 
+  margin-right: 20px;
+  float: right;
+  margin-top: 50px;
+
+
+}
+
+
+.greenBox{
+  width: 98%;  
+  height: 205px; 
+  background-color: white ;
+  border: 20px solid cadetblue;
+  float: right;
+  margin-top: 50px;
+  margin-left: 20px;
+
+
+}
+.but{
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
 .create input, .create textarea, .create select {
-  width: 100px;
-  height: 100px;
+  text-align: center;  
+  width: 120px;
+  height: 50px;
   padding: 6px 10px;
   border: 1px solid #ddd;
   box-sizing: border-box;
   display: block;
+  margin-left: 5px;
  
 }
 
+            
 
-.CalorieTracker {
-  width: 900px;  
-  height: 450px; 
-  margin-top: 55px;
-  margin-left: 50px;
+
+
+.yellowBox{ 
+    
+  width: 56%;  
+  height: 600px; 
+  margin-top: 50px;
   background-color: white;
-  border: 20px solid  #f1356d; 
-  float: right;
-
-  font-size:20px;
+  border: 20px solid  #FFC72C; 
+  margin-left: 45px;
+  float:left;
 
 }
 
+
+
+
+.blueBox{
+
+  width: 110;
+  text-align: center;
+  color: white; 
+  margin-top: 10px;
+  font-size: 50px; 
+  height: 200px; 
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color:  #0066EE; 
+
+}
 
 
 .caloriesRemaining{ 
+  padding-top: 15px;
+  color: #fff;
+  margin-left: 30px;
+  font-size:  30px; 
   
-  width: 400;
-  text-align: center;
-  color: white; 
-  margin-top: 50px;
-  font-size: 100px; 
-  height: 500px; 
-  margin-left: 50px;
-  margin-right: 50px;
-  background-color:  #8BB8E8; 
-
-
-
 }
+
 
 .calNum{
-
-  font-size: 60;
-  text-align: center;
-  color: black;
-  
-}
-
-.create button {
-  background: #f1356d;
-  color: #fff;
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
-}
- 
- 
-
-    .box{ 
+    font-weight: 100px;
+    font-size: 60;
+    text-align: center;
+    color: black;
     
-      width: 50%;  
-      height: 500px; 
-      margin-top: 50px;
-      background-color: white;
-      border: 20px solid  #FFC72C; 
-      float:left;
-      margin-left: 20px;
+  }
 
-    }
+  .create button {
+    margin-left: 655px;
+    height: 80px;
+    width: 250px; 
+    background: #f1356d;
+    color: #fff;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+    float:right; 
 
-  
+  }
+
+ 
+
   .title{
     color: #FFC72C;
     margin: 20px; 
     font-size: 90px;
     
   }
+
   .graphTitle{
     color: #FFC72C;
-   margin-left: 10px;
-    font-size: 20px;
+    margin-left: 10px;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 20px;
+  margin-bottom: 20px;
     
   }
+
+
 
   .discription{
     color: #FFC72C;
