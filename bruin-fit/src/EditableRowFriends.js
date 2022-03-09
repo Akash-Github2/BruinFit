@@ -9,14 +9,11 @@ const EditableRowFriends = ({editFormData, handleEditFormChange}) => {
               name="username"
               required = "required"
               placeholder = "Enter a username"
-              onChange={handleAddFormChange}
+              onChange={handleEditFormChange}
                 />
             </td>
             
         
-            <td>
-                <button type = "submit">Save</button>
-            </td>
         </tr>
     )
 }
