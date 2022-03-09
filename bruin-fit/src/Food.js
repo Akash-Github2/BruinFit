@@ -1,38 +1,27 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import './App.css';
-import data from "./mock-data.json";
-import { nanoid } from 'nanoid';
 import ReadOnlyRow from './components/ReadOnlyRow';
-import EditableRow from './components/EditableRow';
 import './Food.css';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./firebase";
 import {
     collection,
     addDoc,
-    doc, 
-    setDoc
+    doc,
+    getDocs,
+    deleteDoc
   } from "firebase/firestore";
 import { async } from '@firebase/util';
 
-
-
 function Food() {
-    const [contacts, setContacts] = useState(data);
+
     const [addFormData, setAddFormData] = useState({
        date: '',
        food: '',
        calories: '',
-
     });
 
-    const [editFormData, setEditFormData] = useState({
-        date: '',
-       food: '',
-       calories: '',
-    });
-
-    const [editContactId, setEditContactId] = useState(null);
+    const [dateFilter, setDateFilter] = useState("");
 
     const handleAddFormChange = (event) => {
         event.preventDefault();
@@ -47,91 +36,115 @@ function Food() {
 
     };
 
-    const handleEditFormChange = (event) => {
+    const handleSetDateFilterChange = (event) => {
         event.preventDefault();
-
-        const fieldName = event.target.getAttribute('date');
-        const fieldValue = event.target.value;
-
-        const newFormData = { ...editFormData };
-        newFormData[fieldName] = fieldValue;
-
-        setEditFormData(newFormData);
+        setDateFilter(event.target.value);
     };
 
     const handleAddFormSubmit = async(event) => {
         event.preventDefault();
 
-        const newContact = {
-            id: nanoid(),
-            date: addFormData.date,
-            food: addFormData.food,
-            calories: addFormData.calories,
-
-        };
-
-        const newContacts = [...contacts, newContact];
-        setContacts(newContacts);
-
         //Firebase stuff
-
         try {
-
-            await addDoc(collection(db, "users", user.email, "data", "food", addFormData.date), {
+            console.log(addFormData.food);
+            console.log(addFormData.calories);
+            console.log(addFormData.date);
+            await addDoc(collection(db, "users", user.email, "food"), {
               foodName: addFormData.food,
               calories: addFormData.calories,
+              date: addFormData.date
             });
         
           } catch (err) {
             console.error(err);
             alert(err.message);
           }
+
+          const querySnapshot = await getDocs(collection(db, "users", user.email, "food"));
+            const saveFirebaseTodos = [];
+            querySnapshot.forEach((doc) => {
+                const tempMap = doc.data();
+                tempMap["id"] = doc.id;
+                saveFirebaseTodos.push(tempMap);
+            });
+
+            setFoodItems(saveFirebaseTodos);
         
     };
 
-    
-
-
-    const handleEditClick  = (event, contact) => {
+    const handleFilter = async(event) => {
         event.preventDefault();
-        setEditContactId(contact.id);
+        
+        //Firebase stuff
+        const querySnapshot = await getDocs(collection(db, "users", user.email, "food"));
+        const saveFirebaseTodos = [];
+        querySnapshot.forEach((doc) => {
+            const tempMap = doc.data();
+            tempMap["id"] = doc.id;
+            if (tempMap["date"].includes(dateFilter)) {
+                saveFirebaseTodos.push(tempMap);
+            }
+        });
 
-        const formValues = {
-            date: contact.date,
-            food: contact.food,
-            calories: contact.calories,
-
-        };
-
-        setEditFormData(formValues);
+        setFoodItems(saveFirebaseTodos);
     };
 
-    const handleDeleteClick = (contactId) => {
-        const newContacts = [...contacts];
-    
-        const index = contacts.findIndex((contact) => contact.id === contactId);
-    
-        newContacts.splice(index, 1);
-    
-        setContacts(newContacts);
+    const handleDeleteClick = async(entryID) => {
+        if (auth.currentUser) {
+            await deleteDoc(doc(db, "users", user.email, "food", entryID));
+        }
+
+        const querySnapshot = await getDocs(collection(db, "users", user.email, "food"));
+            const saveFirebaseTodos = [];
+            querySnapshot.forEach((doc) => {
+                const tempMap = doc.data();
+                tempMap["id"] = doc.id;
+                saveFirebaseTodos.push(tempMap);
+            });
+
+            setFoodItems(saveFirebaseTodos);
       };
 
 
     const [user, loading, error] = useAuthState(auth);
+    const [foodItems,setFoodItems] = useState([]);
 
+    const fetchFoodItems=async()=>{
+        if (auth.currentUser) {
+            
+            const querySnapshot = await getDocs(collection(db, "users", user.email, "food"));
+            const saveFirebaseTodos = [];
+            querySnapshot.forEach((doc) => {
+                const tempMap = doc.data();
+                tempMap["id"] = doc.id;
+                console.log(doc.id, " => ", doc.data());
+                saveFirebaseTodos.push(tempMap);
+            });
+
+            setFoodItems(saveFirebaseTodos);
+            
+            console.log("Food Items");
+            console.log(foodItems); 
+        }
+    }
+
+    useEffect(() => {
+        fetchFoodItems();
+    }, [loading]);
     
 
     return(
         
         <div className= "app-container">
+            <h1>Email: { auth.currentUser ? user.email : ""} </h1>
             <h1>Food Tracking Table</h1>
-            <h4>Search Date:</h4>
-            <form onSubmit= {handleAddFormSubmit}>
+            <h2>Search Date:</h2>
+            <form onSubmit= {handleFilter}>
                 <input 
                     type = "text" 
-                    name = "date" 
-                    required = "required" 
-                    placeholder = "Enter date (MM/DD/YY)"
+                    name = "dateFilter" 
+                    placeholder = "Enter date (MM-DD-YY)"
+                    onChange={handleSetDateFilterChange}
                     
                 />
                 
@@ -150,24 +163,16 @@ function Food() {
                     </tr>
                 </thead>
                 <tbody>
-                    {contacts.map((contact) => (
-                        <Fragment>
-                            { editContactId === contact.id ? (
-                            <EditableRow 
-                            editformData = {editFormData} 
-                            handleEditformChange = {handleEditFormChange}
-                            />
-                            ) : ( 
+                    {foodItems.map((foodItem) => (
+                        <Fragment key={foodItem.id}>
                             <ReadOnlyRow 
-                            contact = {contact} 
-                            handleEditClick = {handleEditClick}
+                            entry = {foodItem} 
                             handleDeleteClick={handleDeleteClick}
-                            />) }
-
+                            />
+                        
                         </Fragment>
                         
                     ))}
-                   
                 </tbody>
             </table>
             </form>
@@ -199,9 +204,7 @@ function Food() {
             </form>
            
         </div>
-
-
-                                
+  
     )
 }
 

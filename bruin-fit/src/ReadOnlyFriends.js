@@ -1,20 +1,32 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router';
 
 
-const ReadOnlyRow = ({ contact, handleEditClick }) => {
+
+
+const ReadOnlyFriends = ({ entry, handleDeleteClick }) => {
+    
+
+        let navigate = useNavigate();
+        function handleClick() {
+          navigate('/profile')
+        }
+        
+      
+
     return (
         <tr>
-            <td> {contact.date} </td>
-            <td> {contact.food} </td>
-            <td> {contact.calories}</td>
+            <td> {entry.friendName} </td>
             <td>
-                <button type= "button" onClick={(event) => handleEditClick(event, contact)}
-                >
-                    Edit
+                <button type="button" onClick={() => handleDeleteClick(entry.id)}>
+                    Unadd
                 </button>
+
+                <button onClick={handleClick}>Profile</button>
+                
             </td>
         </tr>
     )
 }
 
-export default ReadOnlyRow
+export default ReadOnlyFriends

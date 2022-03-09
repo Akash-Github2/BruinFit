@@ -1,33 +1,28 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import './App.css';
-import data from "./mock-data-fitness.json";
-import { nanoid } from 'nanoid';
 import ReadOnlyRowFit from './ReadOnlyRowFit';
-import EditableRowFit from './EditableRowFit';
 import './Fitness.css';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "./firebase";
+import {
+    collection,
+    addDoc,
+    doc,
+    getDocs,
+    deleteDoc
+  } from "firebase/firestore";
+import { async } from '@firebase/util';
 
 
 
-
-const Fitness = () => 
-{
-    const [contacts, setContacts] = useState(data);
+function Fitness() {
     const [addFormData, setAddFormData] = useState({
        date: '',
        exercise: '',
        time: '',
        calories: '',
-
     });
-
-    const [editFormData, setEditFormData] = useState({
-        date: '',
-       exercise: '',
-       time: '',
-       calories: '',
-    });
-
-    const [editContactId, setEditContactId] = useState(null);
+    const [dateFilter, setDateFilter] = useState("");
 
     const handleAddFormChange = (event) => {
         event.preventDefault();
@@ -41,83 +36,112 @@ const Fitness = () =>
         setAddFormData(newFormData);
     };
 
-    const handleEditFormChange = (event) => {
+    const handleSetDateFilterChange = (event) => {
         event.preventDefault();
-
-        const fieldName = event.target.getAttribute('date');
-        const fieldValue = event.target.value;
-
-        const newFormData = { ...editFormData };
-        newFormData[fieldName] = fieldValue;
-
-        setEditFormData(newFormData);
+        setDateFilter(event.target.value);
     };
 
-    const handleAddFormSubmit = (event) => {
+    const handleAddFormSubmit = async(event) => {
         event.preventDefault();
 
-        const newContact = {
-            id: nanoid(),
-            date: addFormData.date,
-            exercise: addFormData.exercise,
-            time: addFormData.time,
-            calories: addFormData.calories,
+        //Firebase stuff
 
-        };
+        try {
 
-        const newContacts = [...contacts, newContact];
-        setContacts(newContacts);
+            await addDoc(collection(db, "users", user.email, "fitness"), {
+              exercise: addFormData.exercise,
+              time: addFormData.time,
+              calories: addFormData.calories,
+              date: addFormData.date
+            });
+        
+          } catch (err) {
+            console.error(err);
+            alert(err.message);
+          }
 
+        const querySnapshot = await getDocs(collection(db, "users", user.email, "fitness"));
+        const saveFirebaseTodos = [];
+        querySnapshot.forEach((doc) => {
+            const tempMap = doc.data();
+            tempMap["id"] = doc.id;
+            saveFirebaseTodos.push(tempMap);
+        });
+
+        setFitnessItems(saveFirebaseTodos);
 
     };
 
-    
-
-
-    const handleEditClick  = (event, contact) => {
+    const handleFilter = async(event) => {
         event.preventDefault();
-        setEditContactId(contact.id);
+        
+        //Firebase stuff
+        const querySnapshot = await getDocs(collection(db, "users", user.email, "fitness"));
+        const saveFirebaseTodos = [];
+        querySnapshot.forEach((doc) => {
+            const tempMap = doc.data();
+            tempMap["id"] = doc.id;
+            if (tempMap["date"].includes(dateFilter)) {
+                saveFirebaseTodos.push(tempMap);
+            }
+        });
 
-        const formValues = {
-            date: contact.date,
-            exercise: contact.exercise,
-            time: contact.time,
-            calories: contact.calories,
-
-        };
-
-        setEditFormData(formValues);
+        setFitnessItems(saveFirebaseTodos);
     };
 
-    const handleDeleteClick = (contactId) => {
-        const newContacts = [...contacts];
-    
-        const index = contacts.findIndex((contact) => contact.id === contactId);
-    
-        newContacts.splice(index, 1);
-    
-        setContacts(newContacts);
+    const handleDeleteClick = async(entryID) => {
+        if (auth.currentUser) {
+            await deleteDoc(doc(db, "users", user.email, "fitness", entryID));
+        }
+
+        const querySnapshot = await getDocs(collection(db, "users", user.email, "fitness"));
+        const saveFirebaseTodos = [];
+        querySnapshot.forEach((doc) => {
+            const tempMap = doc.data();
+            tempMap["id"] = doc.id;
+            saveFirebaseTodos.push(tempMap);
+        });
+
+        setFitnessItems(saveFirebaseTodos);
       };
 
+    const [user, loading, error] = useAuthState(auth);
+    const [fitnessItems,setFitnessItems] = useState([]);
 
+    const fetchFitnessItems=async()=>{
+        if (auth.currentUser) {
+            
+            const querySnapshot = await getDocs(collection(db, "users", user.email, "fitness"));
+            const saveFirebaseTodos = [];
+            querySnapshot.forEach((doc) => {
+                const tempMap = doc.data();
+                tempMap["id"] = doc.id;
+                console.log(doc.id, " => ", doc.data());
+                saveFirebaseTodos.push(tempMap);
+            });
 
+            setFitnessItems(saveFirebaseTodos);
+        }
+    }
+
+    useEffect(() => {
+        fetchFitnessItems();
+    }, [loading]);
     
 
     return(
         
         <div className= "app-container">
             <h1>Fitness Tracking Table</h1>
-            <h4>Search Date:</h4>
-            <form onSubmit= {handleAddFormSubmit}>
+            <h2>Search Date:</h2>
+            <form onSubmit= {handleFilter}>
                 <input 
                     type = "text" 
                     name = "date" 
-                    required = "required" 
-                    placeholder = "Enter date (MM/DD/YY)"
-                    
+                    placeholder = "Enter date (MM-DD-YY)"
+                    onChange={handleSetDateFilterChange}
                 />
                 
-               
                 <button type= "submit">Search</button>
             </form>
             <form>
@@ -132,20 +156,13 @@ const Fitness = () =>
                     </tr>
                 </thead>
                 <tbody>
-                    {contacts.map((contact) => (
-                        <Fragment>
-                            { editContactId === contact.id ? (
-                            <EditableRowFit 
-                            editformData = {editFormData} 
-                            handleEditformChange = {handleEditFormChange}
-                            />
-                            ) : ( 
+                    {fitnessItems.map((fitnessItem) => (
+                        <Fragment key={fitnessItem.id}>
                             <ReadOnlyRowFit
-                            contact = {contact} 
-                            handleEditClick = {handleEditClick}
+                            entry = {fitnessItem} 
                             handleDeleteClick={handleDeleteClick}
-                            />) }
-
+                            />
+                        
                         </Fragment>
                         
                     ))}
@@ -159,7 +176,7 @@ const Fitness = () =>
                     type = "text" 
                     name = "date" 
                     required = "required" 
-                    placeholder = "Enter date (MM/DD/YY)"
+                    placeholder = "Enter date (MM-DD-YY)"
                     onChange = {handleAddFormChange}
                 />
                 <input 
@@ -188,8 +205,6 @@ const Fitness = () =>
             </form>
            
         </div>
-
-
                                 
     )
 }
