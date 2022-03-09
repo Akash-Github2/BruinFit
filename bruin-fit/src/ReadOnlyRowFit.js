@@ -1,19 +1,15 @@
 import React from 'react'
 
 
-const ReadOnlyRowFit = ({ contact, handleEditClick, handleDeleteClick }) => {
+const ReadOnlyRowFit = ({ entry, handleDeleteClick }) => {
     return (
         <tr>
-            <td> {contact.date} </td>
-            <td> {contact.exercise} </td>
-            <td> {contact.time}</td>
-            <td> {contact.calories}</td>
+            <td> {entry.date} </td>
+            <td> {entry.exercise} </td>
+            <td> {entry.time}</td>
+            <td> {entry.calories}</td>
             <td>
-                <button type= "button" onClick={(event) => handleEditClick(event, contact)}
-                >
-                    Edit
-                </button>
-                <button type="button" onClick={() => handleDeleteClick(contact.id)}>
+                <button type="button" onClick={() => handleDeleteClick(entry.id)}>
                     Delete
                 </button>
             </td>

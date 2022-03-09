@@ -13,7 +13,6 @@ function Register() {
   const [height, setHeight] = useState(""); //in inches
   const [weight, setWeight] = useState("");
   const [weightGoal, setWeightGoal] = useState("");
-  //TODO: add in the multiple choice for desired weight change per week over here
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -111,6 +110,9 @@ function Register() {
           </div>
 
           <button type="submit">Register</button>
+          <div>
+            Have an account? <Link to="/">Sign In</Link> now.
+          </div>
         </form>
       </div>
     </div>
