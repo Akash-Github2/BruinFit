@@ -1,23 +1,19 @@
-import React from 'react';
+import React from "react";
 
+const ReadOnlyOutgoingFriends = ({ entry, handleRemoveFriendReqClicked }) => {
+  return (
+    <tr>
+      <td> {entry["email"]} </td>
+      <td>
+        <button
+          type="button"
+          onClick={() => handleRemoveFriendReqClicked(entry)}
+        >
+          Remove
+        </button>
+      </td>
+    </tr>
+  );
+};
 
-const ReadOnlyOutgoingFriends = ({ entry, handleDeleteClick, handleAddFormSubmit }) => {
-        
-      
-
-    return (
-        <tr>
-            <td> {entry.friendName} </td>
-            <td>
-           
-       
-                <button type="button" onClick={() => handleDeleteClick(entry.id)}>
-                    Remove
-                </button>
-                
-            </td>
-        </tr>
-    )
-}
-
-export default ReadOnlyOutgoingFriends
+export default ReadOnlyOutgoingFriends;
