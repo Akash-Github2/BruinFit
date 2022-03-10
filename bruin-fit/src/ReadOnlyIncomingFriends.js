@@ -1,27 +1,24 @@
-import React from 'react';
+import React from "react";
 
+const ReadOnlyIncomingFriends = ({
+  entry,
+  handleAcceptClicked,
+  handleDeclineClicked,
+}) => {
+  return (
+    <tr>
+      <td> {entry["email"]} </td>
+      <td>
+        <button type="button" onClick={() => handleAcceptClicked(entry)}>
+          Accept
+        </button>
 
-const ReadOnlyIncomingFriends = ({ entry, handleDeleteClick, handleAddFormSubmit }) => {
-        
-      
+        <button type="button" onClick={() => handleDeclineClicked(entry)}>
+          Decline
+        </button>
+      </td>
+    </tr>
+  );
+};
 
-    return (
-        <tr>
-            <td> {entry.friendName} </td>
-            <td>
-
-                <button type="button" onClick={() => handleAddFormSubmit(entry.id)}>
-                    Add
-                </button>
-           
-       
-                <button type="button" onClick={() => handleDeleteClick(entry.id)}>
-                    Deny
-                </button>
-                
-            </td>
-        </tr>
-    )
-}
-
-export default ReadOnlyIncomingFriends
+export default ReadOnlyIncomingFriends;
