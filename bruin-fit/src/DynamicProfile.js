@@ -93,16 +93,18 @@ export default function DynamicProfile({
 
         <Group>           
             <h2>Bio:</h2>
-            <input
+            <br/>
+            <textarea
                 type='text'
-                size="70"
-                height="30"
+                rows="4" cols="50"
                 value={bio}
                 onChange={e => setBio(e.target.value)}
             />            
         </Group>
 
         <Group>
+            <br/>
+            <br/>
             <br/>
             <editButton style={buttonStyle} onClick={clickSave}>Save</editButton>
             <editButton style={buttonStyle} onClick={clickCancel}>Cancel</editButton>

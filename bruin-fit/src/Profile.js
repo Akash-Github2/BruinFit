@@ -78,7 +78,7 @@ function Profile() {
                             />
                         </>
                         : <>
-                            <h1>MY PROFILE</h1>
+                            <h1>MY PROFILE </h1>
                             
                             <StaticProfile
                                     stored={stored}

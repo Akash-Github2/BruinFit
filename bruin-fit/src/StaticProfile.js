@@ -2,6 +2,7 @@ import Group from './Group';
 
 //added this import statement down below to get it to compile
 import React from 'react'
+import Fitness from './Fitness.js';
 
 export default function StaticProfile({
     stored,
@@ -45,12 +46,37 @@ export default function StaticProfile({
 
         <Group>
             <br/>
+            <br/>
+            <br/>
             <editButton
                 style={buttonStyle}
                 onClick={changeFullCall}
             >Edit Profile</editButton>
+
+            <br/>  
+            <br/>  
+            <br/>  
+            <br/>
+
+            <h2> Search For Other Friends' Profiles!: </h2>
+
+            <br/>
+            <br/>
             
+            <textarea 
+                type = "text" 
+                name = "date" 
+                rows="4" cols="50"
+                placeholder = "Search For Friends!"
+                font-size = "18px"
+            />   
+            <br/>
+
+            <button type= "submit">Search</button>
+
         </Group>
+
+        
     </div>
 }
 

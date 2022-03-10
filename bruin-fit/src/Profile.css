@@ -3,11 +3,19 @@ div.container {
   height: 100%;
   display: grid;
   background-color: #ffffff;; 
-  width: 800px; 
-  height: 600px; 
+  width: 1500px; 
+  height: 1000px; 
   font-size: 30px; 
-  border: 10px solid #0066EE;
+  border: 30px solid #0066EE;
+ 
 }
+
+
+.myProfile{
+
+  font-weight: bold;
+}
+
 
 div.profile {
   background-color: rgb(255, 255, 255);
@@ -21,13 +29,14 @@ div.profile {
 div.group {
   vertical-align: middle;
   margin: 0.5em;
-  height: 32px;
+  height: 35px;
   font-size: x-large;
 }
 
 div.birthday {
   font-size: x-large;
   margin: 0.6em; 
+  
 }
 
 div.color-box {
@@ -50,6 +59,8 @@ label {
   font-weight: normal;
   color: #000000;
   text-align: center;
+  font-weight: bold;
+
 }
 
 /* for the "Name, Birthday, Weight, Age, Height" Parts */
@@ -58,24 +69,26 @@ h2 {
   font-weight: normal;
   font-size: px;
   color: #000000;
+  font-weight: bold;
   
 }
 
-
-.DynamicProfile input {
+h2.input {
   position: relative;
-  top: 10px;
+  top: 20px; 
+  padding: 5px;
 }
 
 /* for the edit button */
 editButton {
-  height: 40px;
-  border: 1.5px solid rgb(0, 0, 0);
-  padding: 0px 15px;
-  border-radius: 4px;
-  margin: 2px 1px;
-  background-color: rgb(211, 211, 211);
+  height: 60px;
+  padding: 20px 20px;
+  margin: 2px 5px;
+  background-color: #FFC72C;
+  border-radius: 7px;
   font-size: 20px;
+
+
 }
 
 /* for dynamic profile inputs

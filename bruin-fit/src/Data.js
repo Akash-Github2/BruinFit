@@ -1,3 +1,5 @@
+
+
 export const UserData = [
 
   {
@@ -11,15 +13,13 @@ export const UserData = [
 
 
   {
-  
-    
     date: "03-10-2022",
     weight: 130,
     caloriesConsumed:3000,
     caloiresBurned: 1500, 
   },
+
   {
-    
     date: "03-11-2022",
     weight: 140,
     caloriesConsumed: 3100,
