@@ -13,6 +13,7 @@ function Register() {
   const [height, setHeight] = useState(""); //in inches
   const [weight, setWeight] = useState("");
   const [weightGoal, setWeightGoal] = useState("");
+  const [calorieGoal, setCalorieGoal] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -118,6 +119,14 @@ function Register() {
               required
               placeholder="Weight Goal"
               onChange={(e) => setWeightGoal(e.target.value)}
+              
+            />
+            <input
+              type="text"
+              value={calorieGoal}
+              required
+              placeholder="Calorie Goal"
+              onChange={(e) => setCalorieGoal(e.target.value)}
               
             />
         

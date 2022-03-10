@@ -53,7 +53,7 @@ function Profile() {
     }
 
     return (
-        <div className="container">
+        <div className="pcontainer">
             <div className="Profile">                 
                 {
                     editMode
