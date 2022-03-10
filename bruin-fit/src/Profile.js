@@ -63,14 +63,10 @@ function Profile() {
     }
 
     return (
-<<<<<<< HEAD
-        <div className="pcontainer">
-=======
 
           
         <div className="container">
             
->>>>>>> 8adf476677f605ce8c84f75f3ae8ccebccd3e494
             <div className="Profile">                 
                 {
                     editingMode
