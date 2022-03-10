@@ -47,7 +47,8 @@ const registerWithEmailAndPassword = async (
   age,
   height,
   weight,
-  weightGoal
+  weightGoal,
+  calorieGoal
 ) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -66,7 +67,7 @@ const registerWithEmailAndPassword = async (
       height: height,
       weight: weight,
       weightGoal: weightGoal,
-      calorieGoal: 0,
+      calorieGoal: calorieGoal,
       bio: "",
     });
 

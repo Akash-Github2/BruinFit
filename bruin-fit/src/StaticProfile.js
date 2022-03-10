@@ -23,11 +23,11 @@ export default function StaticProfile({ stored, changeFullCall }) {
       </Group>
 
       <Group>
-        <h2>Weight (Ibs):</h2> {stored.weight}
+        <h2>Weight (lbs):</h2> {stored.weight}
       </Group>
 
       <Group>
-        <h2>Height (Inches):</h2> {stored.height}
+        <h2>Height (in):</h2> {stored.height}
       </Group>
 
       <Group>

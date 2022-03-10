@@ -49,7 +49,7 @@ export default function DynamicProfile({ stored, changeFullCall }) {
       </Group>
 
       <Group>
-        <h2>Weight (Ibs):</h2>
+        <h2>Weight (lbs):</h2>
         <input
           type="number"
           value={weight}
@@ -58,7 +58,7 @@ export default function DynamicProfile({ stored, changeFullCall }) {
       </Group>
 
       <Group>
-        <h2>Height (Inches):</h2>
+        <h2>Height (in):</h2>
         <input
           type="number"
           value={height}

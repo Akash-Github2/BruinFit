@@ -73,6 +73,7 @@ function Profile(props) {
         age: result.age,
         weight: result.weight,
         height: result.height,
+        calorieGoal: result.calorieGoal,
       });
     }
     setEditingMode(false);
@@ -88,7 +89,9 @@ function Profile(props) {
         setName(docRef.data()["firstName"] + " " + docRef.data()["lastName"]);
         setHeight(docRef.data()["height"]);
         setWeight(docRef.data()["weight"]);
+        setCalorieGoal(docRef.data()["calorieGoal"]);
         setEmail(docRef.id);
+        setBio(docRef.data()["bio"]);
       } else {
         console.log("No such document!");
       }
@@ -110,7 +113,7 @@ function Profile(props) {
           </>
         ) : (
           <>
-            <h1>MY PROFILE</h1>
+            <h1>My Profile</h1>
 
             <StaticProfile
               stored={stored}
