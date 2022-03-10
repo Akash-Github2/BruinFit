@@ -276,7 +276,6 @@ function Fitness() {
 </form>
 
 
-
 </div>
 
         <input
