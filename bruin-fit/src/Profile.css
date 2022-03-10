@@ -1,7 +1,12 @@
 div.container {
+  margin: 160px auto;
   height: 100%;
   display: grid;
-  background-color: rgb(92, 12, 12);
+  background-color: #ffffff;; 
+  width: 800px; 
+  height: 600px; 
+  font-size: 30px; 
+  border: 10px solid #0066EE;
 }
 
 div.profile {
@@ -12,15 +17,17 @@ div.profile {
   border-radius: 1em;
 }
 
+/* for the actual birthday date? */
 div.group {
   vertical-align: middle;
   margin: 0.5em;
   height: 32px;
+  font-size: x-large;
 }
 
 div.birthday {
   font-size: x-large;
-  margin: 0.6em;
+  margin: 0.6em; 
 }
 
 div.color-box {
@@ -36,32 +43,43 @@ label {
   margin: 0px;
 }
 
-h1 {
-  font-size: large;
-  margin: 0em 0.8em;
+/* for the "My Profile" Header Part */
+.Profile h1 {
+  margin: 60px; /* changed to 60px */
+  font-size: 60px; 
+  font-weight: normal;
+  color: #000000;
+  text-align: center;
 }
 
+/* for the "Name, Birthday, Weight, Age, Height" Parts */
 h2 {
-  display: inline;
-  font-weight: bold;
-  font-size: medium;
-  margin: inherit;
+  display: inline; /* put the date of the birthday after the birthday header itself */
+  font-weight: normal;
+  font-size: px;
+  color: #000000;
+  
 }
 
-input[type="color"] {
+
+.DynamicProfile input {
   position: relative;
-  top: 4px;
+  top: 10px;
 }
 
-button {
-  border: 1px solid darkgray;
-  background-color: gray;
+/* for the edit button */
+editButton {
+  height: 40px;
+  border: 1.5px solid rgb(0, 0, 0);
+  padding: 0px 15px;
   border-radius: 4px;
-  height: 30px;
-  padding: 0px 1.25em;
-  margin: 1em 0.5em;
+  margin: 2px 1px;
+  background-color: rgb(211, 211, 211);
+  font-size: 20px;
 }
 
-button:hover {
-
+/* for dynamic profile inputs
+Group.input {
+  height: 24px; 
 }
+*/

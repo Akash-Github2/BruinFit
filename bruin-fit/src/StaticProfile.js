@@ -1,39 +1,56 @@
-import { useState } from 'react';
 import Group from './Group';
-import Color from './Color';
-import { months, calcButtonTextColor } from './tools';
 
-export default function EditableUserProfile({
+//added this import statement down below to get it to compile
+import React from 'react'
+
+export default function StaticProfile({
     stored,
-    startEditCallback
+    changeFullCall
 }) {
 
     console.log()
 
+    
     const buttonStyle = {
-        //backgroundColor: stored.color,
-        //color: calcButtonTextColor(stored.color)
     };
 
     return <div>
         <Group>
             <h2>Name:</h2> {stored.name}
         </Group>
+
         <Group>
-            <h2>Birthday:</h2> {months.getShortName(stored.month)} {stored.day}
+            <h2>Email:</h2> {stored.email}
         </Group>
+
         <Group>
-            <h2>Weight:</h2> 
+            <h2>Age:</h2> {stored.age}
         </Group>
+
         <Group>
-            <button
+            <h2>Weight (Ibs):</h2> {stored.weight}
+        </Group>
+
+        <Group>
+            <h2>Height (Inches):</h2> {stored.height}
+        </Group>
+
+        <Group>
+            <h2> Calorie Goal:</h2> {stored.aboutMe}
+        </Group>
+
+        <Group>
+            <h2>Bio:</h2> {stored.bio}
+        </Group>
+
+        <Group>
+            <br/>
+            <editButton
                 style={buttonStyle}
-                onClick={startEditCallback}
-            >Edit</button>
+                onClick={changeFullCall}
+            >Edit Profile</editButton>
+            
         </Group>
     </div>
 }
 
-{
-    
-}
