@@ -17,6 +17,14 @@ import { async } from '@firebase/util';
 
 //creating a friendslist
 function Friends() {
+
+  
+  const [day, setDay] = useState('');
+  const [year, setYear] = useState(''); 
+  const [month, setMonth] = useState(''); 
+
+
+
     const [addFormData, setAddFormData] = useState({
         friendName: '',
         actions: '',
