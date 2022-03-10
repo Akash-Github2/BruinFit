@@ -3,10 +3,8 @@ import Group from "./Group";
 //added this import statement down below to get it to compile
 import React from "react";
 
-export default function StaticProfile({ stored, changeFullCall }) {
+export default function StaticProfile({ stored }) {
   console.log();
-
-  const buttonStyle = {};
 
   return (
     <div>
@@ -36,35 +34,6 @@ export default function StaticProfile({ stored, changeFullCall }) {
 
       <Group>
         <h2>Bio:</h2> {stored.bio}
-      </Group>
-
-      <Group>
-        <br />
-        <editButton style={buttonStyle} onClick={changeFullCall}>
-          Edit Profile
-        </editButton>
-
-        <br/>  
-            <br/>  
-            <br/>  
-            <br/>
-
-            <h2> Search For Other Friends' Profiles!: </h2>
-
-            <br/>
-            <br/>
-            
-            <textarea 
-                type = "text" 
-                name = "date" 
-                rows="4" cols="50"
-                placeholder = "Search For Friends!"
-                font-size = "18px"
-            />   
-            <br/>
-            <br/>
-            <searchButton type= "submit">Search</searchButton>
-
       </Group>
     </div>
   );

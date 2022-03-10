@@ -4,6 +4,7 @@ import DynamicProfile from "./DynamicProfile";
 import StaticProfile from "./StaticProfile";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./firebase";
+import Group from "./Group";
 import {
   collection,
   addDoc,
@@ -44,7 +45,7 @@ function defaultBio() {
   "Edit Bio";
 }
 
-function Profile(props) {
+function Profile() {
   const [editingMode, setEditingMode] = useState(false);
 
   const [name, setName] = useState(defaultName());
@@ -55,10 +56,14 @@ function Profile(props) {
   const [height, setHeight] = useState(defaultHeight());
   const [calorieGoal, setCalorieGoal] = useState(defaultCalorieGoal());
   const [bio, setBio] = useState(defaultBio());
+  const [profileEmail, setProfileEmail] = useState("");
+  const [isCurrUser, setIsCurrUser] = useState(true);
 
   const stored = { name, email, age, weight, height, calorieGoal, bio };
 
   const [user, loading, error] = useAuthState(auth);
+
+  const buttonStyle = {};
 
   async function finishEditing(result) {
     console.log("finishEditing", result);
@@ -81,7 +86,9 @@ function Profile(props) {
 
   const fetchProfileItems = async () => {
     if (auth.currentUser) {
-      const docRef = await getDoc(doc(db, "users", user.email));
+      const docRef = await getDoc(
+        doc(db, "users", profileEmail === "" ? user.email : profileEmail)
+      );
 
       if (docRef.exists()) {
         console.log("Document data:", docRef.data());
@@ -98,9 +105,34 @@ function Profile(props) {
     }
   };
 
-  useEffect(() => {
+  const handleSetProfileEmail = async (event) => {
+    event.preventDefault();
+    console.log(profileEmail);
+    const querySnapshotUsers = await getDocs(
+      collection(db, "users", user.email, "friends")
+    );
+    var tempIsCurrUser = true;
+    querySnapshotUsers.forEach((doc) => {
+      console.log(doc.data());
+      if (doc.data()["email"] === profileEmail) {
+        if (event.target.value != user.email) {
+          tempIsCurrUser = false;
+        }
+        return;
+      }
+    });
+
+    setIsCurrUser(tempIsCurrUser);
+
     fetchProfileItems();
-    console.log(props.userEmail != null ? props.userEmail : "");
+  };
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      setProfileEmail(user.email);
+      console.log(profileEmail);
+      fetchProfileItems();
+    }
   }, [loading]);
 
   return (
@@ -108,17 +140,51 @@ function Profile(props) {
       <div className="Profile">
         {editingMode ? (
           <>
-            <h1>MY PROFILE</h1>
+            <h1>My Profile</h1>
             <DynamicProfile stored={stored} changeFullCall={finishEditing} />
           </>
         ) : (
           <>
             <h1>My Profile</h1>
 
-            <StaticProfile
-              stored={stored}
-              changeFullCall={() => setEditingMode(true)}
-            />
+            <StaticProfile stored={stored} />
+
+            <Group>
+              <br />
+              {(auth.currentUser ? user.email : "") === profileEmail ||
+              profileEmail === "" ? (
+                <>
+                  <editButton
+                    style={buttonStyle}
+                    onClick={() => setEditingMode(true)}
+                  >
+                    Edit Profile
+                  </editButton>
+                </>
+              ) : (
+                <></>
+              )}
+              <br />
+              <br />
+              <br />
+              <br />
+
+              <h2> Search For Other Friends' Profiles!: </h2>
+
+              <br />
+              <br />
+
+              <input
+                type="text"
+                placeholder="Type friend's email"
+                onChange={(e) => setProfileEmail(e.target.value)}
+              />
+              <br />
+              <br />
+              <searchButton onClick={handleSetProfileEmail} type="submit">
+                Search
+              </searchButton>
+            </Group>
           </>
         )}
       </div>
