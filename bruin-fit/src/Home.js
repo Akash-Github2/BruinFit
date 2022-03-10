@@ -32,8 +32,6 @@ function Home()
             borderWidth:2,
             backgroundColor: "rgba(255, 99, 132)"
 
-
-
             
           },
 
@@ -61,21 +59,25 @@ function Home()
 
 
     return(
+
+      <div className = 'fixed'>
       <> 
 
         <div className = 'blueBox'>
           <h1>
             <div > Welcome to Bruinfit!  </div>
-            <div className = 'discription'> Take control of your Life </div>
+            <div className = 'discription'> Take Control Of Your Life </div>
           </h1> 
         </div>
 
     
 
-      <div className = 'goals'>
+    <div className = 'goals'>
       
           <div className = 'yourFitnessSummaryUpdate'>  Update Your Fitness Summary  </div> 
           <div className="but">
+          
+          
           <div className="create">
 
                   <form>
@@ -173,7 +175,11 @@ function Home()
 
                     </select>
                     </form>
+        
+                  
                   </div>
+
+
                   </div>
 
                   <div className="but">
@@ -184,7 +190,7 @@ function Home()
 
                     
                      <form>
-            
+      
                      <label className = 'Weight'>Weight:</label>
                     <textarea
                       required
@@ -193,45 +199,38 @@ function Home()
                     ></textarea>
 
                     </form>
-                  </div>
-
-
-              
-                    <form>
-                    <div className = 'create button'>
-                    <form> <button> Add Information </button></form>
-                    </div>
-                    </form>
-
-                
-                  </div>
+                  </div> 
+                      
+          <div className = 'create button'>
+                <button> Add Information </button>
+          </div>   
+       </div>
 
     
                 
       <div className = 'greenBox'>
-        <div className = 'caloriesRemaining'>
-       <div className ='yourDailyCalorieCount'> Your Daily Calorie Count </div>
-    
-       
-  
-        </div>
-
-        <div className = 'goalANDremaining'>
-        GOAL:
-        </div>
-
-        <div className = 'goalANDremaining'>
-        Remaining:
-        </div>
-
-      
-
-      </div>
-
+            <div className = 'caloriesRemaining'>
+            <div className ='yourDailyCalorieCount'> Your Daily Calorie Count </div>
+          
             
+        
+              <div className = 'goalANDremaining'>
+              GOAL:
+              </div>
+
+              <div className = 'goalANDremaining'>
+              Calories Consumed:
+              </div>
+
+              </div>
+
+       </div>
 
 
-      </div> 
+
+
+
+ </div> 
 
 
         <div style={{ 
@@ -249,14 +248,9 @@ function Home()
 
 
         
-      
-        
+     </>
 
-
-
-
-     
-      </>
+     </div>
 
     );
 }

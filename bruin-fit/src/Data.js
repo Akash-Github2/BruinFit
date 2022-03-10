@@ -2,6 +2,9 @@
 
 export const UserData = [
 
+
+  
+
   {
 
     date: "01-16-2022",
@@ -179,8 +182,22 @@ export const UserData = [
     caloriesConsumed: 3420,
     caloiresBurned: 300, 
 
+    
   },
 
+
+  {
+
+    date: "12-12-2021",
+    weight: 240,
+    caloriesConsumed: 3420,
+    caloiresBurned: 300, 
+
+    
+  },
+
+
+  
 
   
 

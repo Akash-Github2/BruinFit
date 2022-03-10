@@ -1,72 +1,87 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
+
+
+
 .yourFitnessSummaryUpdate{
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
   font-size: 30px;
-  color: #f1356d;
+  color: #0066EE;
+  position: aboslute; 
+  font-weight: bold;
+  
 }
 
 
 
 .goalANDremaining{
-  margin-left: 200px;
+  margin-left: 50px;
   font-size: 30px;
-  color: cadetblue;
+  font-weight: bold;
+  color: #0066EE;
   padding: 20px;
 }
 
 .Date{
-  margin-left: 200px;
+  margin-left: 100px;
   font-size: 30px;
-  color: #f1356d;
+  color: #0066EE;
+  font-weight: bold;
 
 
 }
 
 .yourDailyCalorieCount{
   text-align: center;
-  color:cadetblue;
+  color: #0066EE;
+  
+
 
 }
 
 
 .Weight{
-  margin-left: 170px;
-  color: #f1356d;
+  margin-left: 70px;
+  color: #0066EE;
   font-size: 30px;
-
+  font-weight: bold;
 }
 
 
 
 .goals{ 
 
-  width: 45%;  
+  width: 700px;  
   height: 300px; 
   background-color: white;
-  border: 20px solid  #f1356d; 
-  margin-right: 20px;
+  border: 20px solid  #0066EE;
   float: right;
   margin-top: 50px;
-
+  margin-right: 300px;
+  margin-left: 150px;
+  position: absolute; 
 
 }
-
 
 .greenBox{
-  width: 98%;  
-  height: 205px; 
+  width: 700px;  
+  height: 250px; 
   background-color: white ;
-  border: 20px solid cadetblue;
-  float: right;
-  margin-top: 50px;
-  margin-left: 20px;
+  border: 20px solid #0066EE;
+  margin-top: 120px;
+  position: absolute;
+  margin-left: -25px;
 
-
+  
 }
+
+
+
+
+
 .but{
   margin-left: 10px;
   margin-bottom: 10px;
@@ -77,7 +92,7 @@
   width: 120px;
   height: 50px;
   padding: 6px 10px;
-  border: 1px solid #ddd;
+  border: 2px solid black;
   box-sizing: border-box;
   display: block;
   margin-left: 5px;
@@ -89,13 +104,14 @@
 
 .yellowBox{ 
     
-  width: 56%;  
+  width: 60px;  
   height: 600px; 
   margin-top: 50px;
   background-color: white;
   border: 20px solid  #FFC72C; 
-  margin-left: 45px;
-  float: left;
+  margin-left: 900px;
+  float:right;
+  position: absolute; 
 
 }
 
@@ -104,15 +120,16 @@
 
 .blueBox{
 
-  width: 110;
+  width: 100%;
   text-align: center;
   color: white; 
   margin-top: 10px;
   font-size: 50px; 
+  font-weight: bold;
   height: 200px; 
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-right: 50px; 
   background-color:  #0066EE; 
+  
 
 }
 
@@ -122,6 +139,7 @@
   color: #fff;
   margin-left: 30px;
   font-size:  30px; 
+  font-weight: bold;
   
 }
 
@@ -135,13 +153,14 @@
   }
 
   .create button {
-    margin-left: 655px;
-    height: 80px;
-    width: 250px; 
-    background: #f1356d;
+    margin-right: 50px; 
+    height: 60px;
+    width: 200px; 
+    background: #0066EE;
     color: #fff;
     border: 0;
     border-radius: 7px;
+    font-size: 20px;
     cursor: pointer;
     float:right; 
 
@@ -153,7 +172,7 @@
     color: #FFC72C;
     margin: 20px; 
     font-size: 90px;
-    
+    font-weight: bold;
   }
 
   .graphTitle{
@@ -163,6 +182,7 @@
     text-align: center;
     margin-top: 20px;
   margin-bottom: 20px;
+  font-weight: bold; 
     
   }
 
