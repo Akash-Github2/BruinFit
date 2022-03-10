@@ -1,75 +1,92 @@
 import { useState } from 'react';
-import './App.css';
-import EditableUserProfile from './DynamicProfile';
-import Username from './StaticProfile';
+import './Profile.css';
+import DynamicProfile from './DynamicProfile';
+import StaticProfile from './StaticProfile';
 
-const animals = [
-    "Aardvark",
-    "Albatross",
-    "Alpaca",
-    "Alligator",
-    "Anchovie",
-    "Angelfish",
-    "Ant",
-    "Antelope",
-    "Armadillo",
-    "Aurochs",
-    "Axolotl"
-]
-
-/*
-function randomColor() {
-    return "#" + Math.floor(Math.random()*16777215).toString(16);
-}
-*/
+//added the two import statements down below to get it to compile
+import React from 'react'
 
 function defaultName() {
     "Edit Name"; 
 }
 
+function defaultAge() {
+    "Edit Age"; 
+}
+
+function defaultWeight() {
+    "Edit Weight"; 
+}
+
+function defaultHeight() {
+    "Edit Height"; 
+}
+
+function defaultAboutMe() {
+    "Edit About Me"; 
+}
+
+function defaultEmail() { 
+    "Edit Email"; 
+}
+
+function defaultBio() { 
+    "Edit Bio"; 
+}
 
 function Profile() {
-    const now = new Date(Date.now());
-    const defaultBirthday = new Date(now.getTime());
-
-    const [editMode, setEditMode] = useState(false);
+    const [editingMode, setEditingMode] = useState(false);
 
     const [name, setName] = useState(defaultName());
-    const [month, setMonth] = useState(defaultBirthday.getMonth());
-    const [day, setDay] = useState(defaultBirthday.getDate());
-    //const [color, setColor] = useState(randomColor());
 
-    const stored = {name, month, day/*, color*/};
+    const [age, setAge] = useState(defaultAge());
+    const [email, setEmail] = useState(defaultEmail());
+    const [weight, setWeight] = useState(defaultWeight());
+    const [height, setHeight] = useState(defaultHeight());
+    const [aboutMe, setAboutMe] = useState(defaultAboutMe());
+    const [bio, setBio] = useState(defaultBio());
+
+    const stored = {name, email, age, weight, height, aboutMe, bio};
     
-    function handleEditComplete(result) {
-        console.log("handleEditComplete", result);
+    function finishEditing(result) {
+        console.log("finishEditing", result);
         if (result != null) {
             setName(result.name);
-            setMonth(result.month);
-            setDay(result.day);
-            //setColor(result.color);
+            setEmail(result.email);
+            setAge(result.age);
+            setWeight(result.weight);
+            setHeight(result.height);
+            setAboutMe(result.aboutMe);
+            setBio(result.bio);
         }        
-        setEditMode(false);
+        setEditingMode(false);
     }
 
     return (
+<<<<<<< HEAD
         <div className="pcontainer">
+=======
+
+          
+        <div className="container">
+            
+>>>>>>> 8adf476677f605ce8c84f75f3ae8ccebccd3e494
             <div className="Profile">                 
                 {
-                    editMode
+                    editingMode
                         ? <>
-                            <h1>My Profile</h1>
-                            <EditableUserProfile
+                            <h1>MY PROFILE</h1>
+                            <DynamicProfile
                                     stored={stored}
-                                    editCompleteCallback={handleEditComplete}                            
+                                    changeFullCall={finishEditing}                            
                             />
                         </>
                         : <>
-                            <h1>My Profile</h1>
+                            <h1>MY PROFILE</h1>
                             
-                            <Username
+                            <StaticProfile
                                     stored={stored}
-                                    startEditCallback={() => setEditMode(true)}
+                                    changeFullCall={() => setEditingMode(true)}
                             />
                         </>
                 }            
