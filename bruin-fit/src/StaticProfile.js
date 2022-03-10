@@ -43,6 +43,28 @@ export default function StaticProfile({ stored, changeFullCall }) {
         <editButton style={buttonStyle} onClick={changeFullCall}>
           Edit Profile
         </editButton>
+
+        <br/>  
+            <br/>  
+            <br/>  
+            <br/>
+
+            <h2> Search For Other Friends' Profiles!: </h2>
+
+            <br/>
+            <br/>
+            
+            <textarea 
+                type = "text" 
+                name = "date" 
+                rows="4" cols="50"
+                placeholder = "Search For Friends!"
+                font-size = "18px"
+            />   
+            <br/>
+            <br/>
+            <searchButton type= "submit">Search</searchButton>
+
       </Group>
     </div>
   );
