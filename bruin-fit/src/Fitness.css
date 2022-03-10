@@ -29,8 +29,20 @@
   }
 
   .app-container h1{
-    color: #0066EE;
-    font-family: montserrat;
+  margin: auto;
+	font-weight: normal;
+	position: relative;
+	text-shadow: 0 -1px rgba(0,0,0,0.6);
+	font-size: 28px;
+	line-height: 40px;
+	background: #0066EE;
+	background: #0066EE;
+	border: 1px solid #fff;
+	padding: 5px 15px;
+	color: white;
+	border-radius: 0 10px 0 10px;
+	box-shadow: inset 0 0 5px rgba(53,86,129, 0.5);
+	font-family: 'Muli', sans-serif;
   }
   .app-container h2{
     color: #0066EE;
