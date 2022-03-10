@@ -15,7 +15,7 @@ function Home()
 
 
   const [month, setMonth] = useState('');
-  const [calories, setCalories] = useState('');
+
   const [day, setDay] = useState('');
   const [year, setYear] = useState(''); 
   const [weight, setWeight] = useState('');
@@ -28,30 +28,14 @@ function Home()
           {
             label: "Weight (lbs)", 
             data: UserData.map((data) => data.weight),
-            borderColor: "rgba(255, 99, 132)",
+            borderColor: "rgb(53, 162, 235)",
             borderWidth:2,
-            backgroundColor: "rgba(255, 99, 132)"
+            backgroundColor: "rgb(53, 162, 235)"
 
             
           },
 
-          {
-            label: "Calories Consumed", 
-            data: UserData.map((data) => data.caloriesConsumed),
-            borderColor: "rgb(100, 200, 235)",
-            borderWidth:2,
-            backgroundColor: "rgb(100, 200, 235)"
-          },
-
-          {
-            label: "Calories Burned ", 
-            data: UserData.map((data) => data.caloiresBurned ),
-            borderColor: "rgb(53, 162, 235)",
-            borderWidth:2,
-            backgroundColor:  "rgb(53, 162, 235)"
-          },
-          
-
+            
 
         ],
       });
@@ -210,18 +194,7 @@ function Home()
                 
       <div className = 'greenBox'>
             <div className = 'caloriesRemaining'>
-            <div className ='yourDailyCalorieCount'> Your Daily Calorie Count </div>
-          
-            
-        
-              <div className = 'goalANDremaining'>
-              GOAL:
-              </div>
-
-              <div className = 'goalANDremaining'>
-              Calories Consumed:
-              </div>
-
+            <div className ='yourDailyCalorieCount'> Your Daily Calorie Count Goal: </div>
               </div>
 
        </div>
