@@ -1,81 +1,129 @@
-import { useState } from 'react';
-import './App.css';
-import EditableUserProfile from './DynamicProfile';
-import Username from './StaticProfile';
-
-const animals = [
-    "Aardvark",
-    "Albatross",
-    "Alpaca",
-    "Alligator",
-    "Anchovie",
-    "Angelfish",
-    "Ant",
-    "Antelope",
-    "Armadillo",
-    "Aurochs",
-    "Axolotl"
-]
-
-/*
-function randomColor() {
-    return "#" + Math.floor(Math.random()*16777215).toString(16);
-}
-*/
+import React, { useState, useEffect } from "react";
+import "./Profile.css";
+import DynamicProfile from "./DynamicProfile";
+import StaticProfile from "./StaticProfile";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "./firebase";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDocs,
+  deleteDoc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { async } from "@firebase/util";
 
 function defaultName() {
-    "Edit Name"; 
+  "Edit Name";
 }
 
+function defaultAge() {
+  "Edit Age";
+}
 
-function Profile() {
-    const now = new Date(Date.now());
-    const defaultBirthday = new Date(now.getTime());
+function defaultWeight() {
+  "Edit Weight";
+}
 
-    const [editMode, setEditMode] = useState(false);
+function defaultHeight() {
+  "Edit Height";
+}
 
-    const [name, setName] = useState(defaultName());
-    const [month, setMonth] = useState(defaultBirthday.getMonth());
-    const [day, setDay] = useState(defaultBirthday.getDate());
-    //const [color, setColor] = useState(randomColor());
+function defaultCalorieGoal() {
+  "Edit CalorieGoal";
+}
 
-    const stored = {name, month, day/*, color*/};
-    
-    function handleEditComplete(result) {
-        console.log("handleEditComplete", result);
-        if (result != null) {
-            setName(result.name);
-            setMonth(result.month);
-            setDay(result.day);
-            //setColor(result.color);
-        }        
-        setEditMode(false);
+function defaultEmail() {
+  "Edit Email";
+}
+
+function defaultBio() {
+  "Edit Bio";
+}
+
+function Profile(props) {
+  const [editingMode, setEditingMode] = useState(false);
+
+  const [name, setName] = useState(defaultName());
+
+  const [age, setAge] = useState(defaultAge());
+  const [email, setEmail] = useState(defaultEmail());
+  const [weight, setWeight] = useState(defaultWeight());
+  const [height, setHeight] = useState(defaultHeight());
+  const [calorieGoal, setCalorieGoal] = useState(defaultCalorieGoal());
+  const [bio, setBio] = useState(defaultBio());
+
+  const stored = { name, email, age, weight, height, calorieGoal, bio };
+
+  const [user, loading, error] = useAuthState(auth);
+
+  async function finishEditing(result) {
+    console.log("finishEditing", result);
+    if (result != null) {
+      setAge(result.age);
+      setWeight(result.weight);
+      setHeight(result.height);
+      setCalorieGoal(result.calorieGoal);
+      setBio(result.bio);
+
+      await updateDoc(doc(db, "users", user.email), {
+        age: result.age,
+        weight: result.weight,
+        height: result.height,
+        calorieGoal: result.calorieGoal,
+      });
     }
+    setEditingMode(false);
+  }
 
-    return (
-        <div className="container">
-            <div className="Profile">                 
-                {
-                    editMode
-                        ? <>
-                            <h1>My Profile</h1>
-                            <EditableUserProfile
-                                    stored={stored}
-                                    editCompleteCallback={handleEditComplete}                            
-                            />
-                        </>
-                        : <>
-                            <h1>My Profile</h1>
-                            
-                            <Username
-                                    stored={stored}
-                                    startEditCallback={() => setEditMode(true)}
-                            />
-                        </>
-                }            
-            </div>
-        </div>
-    );
+  const fetchProfileItems = async () => {
+    if (auth.currentUser) {
+      const docRef = await getDoc(doc(db, "users", user.email));
+
+      if (docRef.exists()) {
+        console.log("Document data:", docRef.data());
+        setAge(docRef.data()["age"]);
+        setName(docRef.data()["firstName"] + " " + docRef.data()["lastName"]);
+        setHeight(docRef.data()["height"]);
+        setWeight(docRef.data()["weight"]);
+        setCalorieGoal(docRef.data()["calorieGoal"]);
+        setEmail(docRef.id);
+        setBio(docRef.data()["bio"]);
+      } else {
+        console.log("No such document!");
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchProfileItems();
+    console.log(props.userEmail != null ? props.userEmail : "");
+  }, [loading]);
+
+  return (
+    <div className="container">
+      <div className="Profile">
+        {editingMode ? (
+          <>
+            <h1>MY PROFILE</h1>
+            <DynamicProfile stored={stored} changeFullCall={finishEditing} />
+          </>
+        ) : (
+          <>
+            <h1>My Profile</h1>
+
+            <StaticProfile
+              stored={stored}
+              changeFullCall={() => setEditingMode(true)}
+            />
+          </>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default Profile;

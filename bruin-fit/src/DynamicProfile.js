@@ -1,128 +1,100 @@
-import { useState, useEffect } from 'react';
-import Group from './Group';
-import { months, calcButtonTextColor } from './tools';
+import { useState } from "react";
+import Group from "./Group";
+import "./Profile.css";
 
-function renderMonthOptions() {
-    return months.getMonths().map( (m, i) => {
-        return <option
-            key={i}
-            value={i}
-        >
-            {m.shortName}
-        </option>
-    });
-}
+//added this import statement down below to get it to compile
+import React from "react";
+import Profile from "./Profile";
 
-function bound(value, floor, ceil) {
-    return Math.min(ceil, Math.max(value, floor));
-}
+export default function DynamicProfile({ stored, changeFullCall }) {
+  console.log("Edit User Profile");
 
-export default function EditableUserProfile({
-    stored,
-    editCompleteCallback
-}) {
+  const [name, setName] = useState(stored.name);
+  const [email, setEmail] = useState(stored.email);
 
-    console.log("Edit User Profile");
+  const [age, setAge] = useState(stored.age);
+  const [weight, setWeight] = useState(stored.weight);
+  const [height, setHeight] = useState(stored.height);
+  const [calorieGoal, setCalorieGoal] = useState(stored.calorieGoal);
+  const [bio, setBio] = useState(stored.bio);
 
-    const [name, setName] = useState(stored.name);
-    const [month, setMonth] = useState(stored.month);
-    const [day, setDay] = useState(stored.day);
-    /*const [color, setColor] = useState(stored.color); */
+  function clickCancel() {
+    changeFullCall(null);
+  }
 
-    const maxDay = months.getNumDays(month);
+  function clickSave() {
+    console.log("Saved");
+    changeFullCall({ name, email, age, weight, height, calorieGoal, bio });
+  }
 
-    function handleCancelClicked() {
-        editCompleteCallback(null);
-    }
+  const buttonStyle = {};
 
-    function handleSaveClicked() {
-        console.log("Saved");
-        editCompleteCallback({name, month, day /*, color*/});
-    }
+  return (
+    <>
+      <Group>
+        <h2>Name:</h2> {stored.name}
+      </Group>
 
-    useEffect(() => {
-        setDay(bound(day, 1, maxDay));
-    }, [month]);
+      <Group>
+        <h2>Email:</h2> {stored.email}
+      </Group>
 
-    const buttonStyle = {
-        /*backgroundColor: color,
-        color: calcButtonTextColor(color)
-        */
-    };
+      <Group>
+        <h2>Age:</h2>
+        <input
+          type="number"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
+      </Group>
 
-    //calcButtonTextColor(color);
+      <Group>
+        <h2>Weight (lbs):</h2>
+        <input
+          type="number"
+          value={weight}
+          onChange={(e) => setWeight(e.target.value)}
+        />
+      </Group>
 
-    return <>
-        <Group>    
-            <br></br>        
-            <h2>Name:</h2>
-            <input
-                type='text'
-                value={name}
-                onChange={e => setName(e.target.value)}
-            />            
-        </Group>
+      <Group>
+        <h2>Height (in):</h2>
+        <input
+          type="number"
+          value={height}
+          onChange={(e) => setHeight(e.target.value)}
+        />
+      </Group>
 
-        <Group>  
-            <br></br>               
-            <h2>Birthday:</h2>            
-            
-            <select
-                value={month}
-                onChange={e => setMonth(bound(e.target.value, 0, 11))}
-            >
-                {renderMonthOptions()}
-            </select>
-            <input
-                type='number'
-                value={day}
-                onChange={e => setDay(bound(e.target.value, 1, maxDay))}
-                style={{width: "50px"}}
-            />
-        </Group>
-        <Group>      
-            <br></br>       
-            <h2>Age:</h2>
-            <input
-                //type="age"
-                //value={"age"} 
-                //onChange={e => setAge(e.target.value)}
-            />
-        </Group>
+      <Group>
+        <h2>Calorie Goal:</h2>
+        <input
+          type="number"
+          value={calorieGoal}
+          onChange={(e) => setCalorieGoal(e.target.value)}
+        />
+      </Group>
 
-        <Group> 
-            <br></br>           
-            <h2>Weight:</h2>
-            <input
-                //type="age"
-                //value={"age"} 
-                //onChange={e => setAge(e.target.value)}
-            />
-        </Group>
+      <Group>
+        <h2>Bio:</h2>
+        <input
+          type="text"
+          size="70"
+          height="30"
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+        />
+      </Group>
 
-        <Group> 
-            <br></br>           
-            <h2>Height:</h2>
-            <input
-                //type="age"
-                //value={"age"} 
-                //onChange={e => setAge(e.target.value)}
-            />
-        </Group>
-
-        <Group> 
-            <br></br>           
-            <h2>About Me:</h2>
-            <input
-                //type="age"
-                //value={"age"} 
-                //onChange={e => setAge(e.target.value)}
-            />
-        </Group>
-
-        <Group>
-            <button style={buttonStyle} onClick={handleSaveClicked}>Save</button>
-            <button style={buttonStyle} onClick={handleCancelClicked}>Cancel</button>
-        </Group>
+      <Group>
+        <br />
+        <editButton style={buttonStyle} onClick={clickSave}>
+          Save
+        </editButton>
+        <editButton style={buttonStyle} onClick={clickCancel}>
+          Cancel
+        </editButton>
+      </Group>
     </>
+  );
 }
