@@ -10,8 +10,8 @@ BruinFit is an online platform used to meet your fitness goals. Users can create
 2. Add friends to view their profiles
 3. Track your food/calories and log your exercises and calories burned 
 4. Search through date to see your food consumption/activity for that specific day 
-5. View a graph of your updated weight and ___________
-6. Get updated amount of calories remaining for you to consume in the day to meet your goal 
+5. View a graph of your updated weight
+6. Update your profile
 7. Use navigation to go from page to page
 
 ## Important Files

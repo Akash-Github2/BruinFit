@@ -22,9 +22,11 @@ function Home() {
   // Graph Input Values
   const [user, loading, error] = useAuthState(auth);
   const [month, setMonth] = useState("01");
-  const [calories, setCalories] = useState("");
   const [day, setDay] = useState("01");
   const [year, setYear] = useState("2023");
+  const [month2, setMonth2] = useState("01");
+  const [day2, setDay2] = useState("01");
+  const [year2, setYear2] = useState("2023");
   const [weight, setWeight] = useState("");
   const [weightsData, setWeightsData] = useState([]);
   const [sortedWeightsData, setSortedWeightsData] = useState([]);
@@ -46,6 +48,48 @@ function Home() {
     } catch (err) {
       console.error(err);
       alert(err.message);
+    }
+
+    const querySnapshot = await getDocs(
+      collection(db, "users", user.email, "weights")
+    );
+    const saveFirebaseTodos = [];
+    querySnapshot.forEach((doc) => {
+      const tempMap = doc.data();
+      tempMap["id"] = doc.id;
+      tempMap["date"] = doc.id;
+      saveFirebaseTodos.push(tempMap);
+      console.log(tempMap);
+    });
+
+    var reformatedWeightsData = [];
+    for (var i = 0; i < saveFirebaseTodos.length; i++) {
+      reformatedWeightsData.push(saveFirebaseTodos[i]);
+      var dateStr = reformatedWeightsData[i]["id"];
+      const dateArr = dateStr.split("-");
+      const month = dateArr[0];
+      const day = dateArr[1];
+      const year = dateArr[2];
+      var reformatedDataStr = year + "-" + month + "-" + day;
+      reformatedWeightsData[i]["id"] = reformatedDataStr;
+    }
+    // console.log(reformatedWeightsData);
+    reformatedWeightsData.sort((a, b) => (a.id > b.id ? 1 : -1));
+    setSortedWeightsData(reformatedWeightsData);
+    console.log(reformatedWeightsData);
+  };
+
+  const handleRemoveWeight = async (event) => {
+    if (auth.currentUser) {
+      await deleteDoc(
+        doc(
+          db,
+          "users",
+          user.email,
+          "weights",
+          month2 + "-" + day2 + "-" + year2
+        )
+      );
     }
 
     const querySnapshot = await getDocs(
@@ -235,8 +279,6 @@ function Home() {
             </div>
           </div>
 
-
-
           <div className="but">
             <div className="create">
               <form>
@@ -244,8 +286,8 @@ function Home() {
 
                 <div className="placement">
                   <select
-                    value={month}
-                    onChange={(e) => setMonth(e.target.value)}
+                    value={month2}
+                    onChange={(e) => setMonth2(e.target.value)}
                   >
                     <option value="01"> 01 </option>
                     <option value="02"> 02 </option>
@@ -262,7 +304,7 @@ function Home() {
                   </select>
                 </div>
 
-                <select value={day} onChange={(e) => setDay(e.target.value)}>
+                <select value={day2} onChange={(e) => setDay2(e.target.value)}>
                   <option value="01"> 01 </option>
                   <option value="02"> 02 </option>
                   <option value="03"> 03 </option>
@@ -296,7 +338,10 @@ function Home() {
                   <option value="31"> 31 </option>
                 </select>
 
-                <select value={year} onChange={(e) => setYear(e.target.value)}>
+                <select
+                  value={year2}
+                  onChange={(e) => setYear2(e.target.value)}
+                >
                   <option year="2023"> 2023 </option>
                   <option year="2022"> 2022 </option>
                   <option year="2021"> 2021 </option>
@@ -326,7 +371,6 @@ function Home() {
             </div>
           </div>
 
-
           <div className="but">
             <div className="create">
               <form>
@@ -343,10 +387,9 @@ function Home() {
               <button onClick={handleSubmitWeight}> Update Info </button>
             </div>
 
-            <div className="create button">
-              <button onClick={handleSubmitWeight}> Remove Date </button>
+            <div className="create button2">
+              <button onClick={handleRemoveWeight}> Remove Date </button>
             </div>
-
           </div>
 
           <div className="greenBox">
@@ -373,9 +416,9 @@ function Home() {
                 {
                   label: "Weight (lbs)",
                   data: sortedWeightsData.map((data) => data["weight"]),
-                  borderColor: "rgba(255, 99, 132)",
+                  borderColor: "rgba(0, 102, 238)",
                   borderWidth: 2,
-                  backgroundColor: "rgba(255, 99, 132)",
+                  backgroundColor: "rgba(0, 102, 238)",
                 },
               ],
             }}
