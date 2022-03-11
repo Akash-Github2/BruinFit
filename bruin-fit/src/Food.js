@@ -14,8 +14,8 @@ import {
 import { async } from "@firebase/util";
 
 function Food() {
-  const [day, setDay] = useState("1");
-  const [year, setYear] = useState("1");
+  const [day, setDay] = useState("01");
+  const [year, setYear] = useState("01");
   const [month, setMonth] = useState("23");
 
   const [addFormData, setAddFormData] = useState({
