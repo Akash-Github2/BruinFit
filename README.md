@@ -27,7 +27,7 @@ Login.js is used for the login page once someone has already made an account
 Register.js is used for the register page and provides data unqiue to each user
 
 ## Running the Application 
-1. Install [Node.js] (https://nodejs.org/en/) 
+1. Install Node.js (https://nodejs.org/en/) 
 2. Next, make sure to clone the repository using: 
 * ```git clone https://github.com/Akash-Github2/BruinFit```
 3. Change directory into the web-app's directory by using the following command: 
