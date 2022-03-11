@@ -35,6 +35,7 @@ Register.js
 4. Use the command below in order to install the proper packages for npm 
 * ```npm install```
 5. Some other optional installations/command you may need to do include the following: 
+* ```npm install react-bootstrap```
 * ```npm install react-router-dom```
 * ```npm install --save react-chartjs-2 chart.js```
 6. Now, you should be able to start the web-application using the command down below: 
