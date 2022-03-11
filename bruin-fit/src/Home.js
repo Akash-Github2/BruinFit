@@ -240,7 +240,7 @@ function Home() {
           <div className="but">
             <div className="create">
               <form>
-                <label className="Date">Date:</label>
+                <label className="Date2"> Remove Date:</label>
 
                 <div className="placement">
                   <select
