@@ -155,12 +155,15 @@ function Profile() {
               {(auth.currentUser ? user.email : "") === profileEmail ||
               profileEmail === "" ? (
                 <>
+                   <br />
+                  <br />
                   <editButton
                     style={buttonStyle}
                     onClick={() => setEditingMode(true)}
                   >
                     Edit Profile
                   </editButton>
+                 
                 </>
               ) : (
                 <></>
