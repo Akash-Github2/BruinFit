@@ -18,8 +18,25 @@ BruinFit is an online platform used to meet your fitness goals. Users can create
 
 App.js is used to connect the navigation to each of the pages by linking each one with routes
 
-Firebase.js is used 
+Firebase.js is used for firebase configuration
 
 MenuItems.js gives each page a url, so that you can visit each page with a different url 
 
+Login.js
+
+Register.js
+
 ## Running the Application 
+1. Install Node.js [Node.js] (https://nodejs.org/en/) 
+2. Next, make sure to clone the repository using: 
+* ```git clone https://github.com/Akash-Github2/BruinFit```
+3. Change directory into the web-app's directory by using the following command: 
+* ```cd bruin-fit```
+4. Use the command below in order to install the proper packages for npm 
+* ```npm install```
+5. Some other optional installations/command you may need to do include the following: 
+* ```npm install react-router-dom```
+* ```npm install --save react-chartjs-2 chart.js```
+6. Now, you should be able to start the web-application using the command down below: 
+* ```npm start```
+   
