@@ -22,9 +22,9 @@ Firebase.js is used for firebase configuration
 
 MenuItems.js gives each page a url, so that you can visit each page with a different url 
 
-Login.js
+Login.js is used for the login page once someone has already made an account
 
-Register.js
+Register.js is used for the register page and provides data unqiue to each user
 
 ## Running the Application 
 1. Install Node.js [Node.js] (https://nodejs.org/en/) 
