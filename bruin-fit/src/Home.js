@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LineChart from "./components/LineChart";
 import { UserData } from "./Data";
 import React from "react";
@@ -12,6 +12,7 @@ import {
   getDocs,
   deleteDoc,
   setDoc,
+  getDoc,
 } from "firebase/firestore";
 import { async } from "@firebase/util";
 
@@ -20,41 +21,16 @@ import { async } from "@firebase/util";
 function Home() {
   // Graph Input Values
   const [user, loading, error] = useAuthState(auth);
-  const [month, setMonth] = useState("1");
+  const [month, setMonth] = useState("01");
   const [calories, setCalories] = useState("");
-  const [day, setDay] = useState("1");
+  const [day, setDay] = useState("01");
   const [year, setYear] = useState("2023");
   const [weight, setWeight] = useState("");
+  const [weightsData, setWeightsData] = useState([]);
+  const [sortedWeightsData, setSortedWeightsData] = useState([]);
+  const [calorieGoal, setCalorieGoal] = useState(0);
 
   // Weight and Calories Consumed Line Graph (Data.js has all values)
-  const [userData] = useState({
-    labels: UserData.map((data) => data.date),
-    datasets: [
-      {
-        label: "Weight (lbs)",
-        data: UserData.map((data) => data.weight),
-        borderColor: "rgba(255, 99, 132)",
-        borderWidth: 2,
-        backgroundColor: "rgba(255, 99, 132)",
-      },
-
-      {
-        label: "Calories Consumed",
-        data: UserData.map((data) => data.caloriesConsumed),
-        borderColor: "rgb(100, 200, 235)",
-        borderWidth: 2,
-        backgroundColor: "rgb(100, 200, 235)",
-      },
-
-      {
-        label: "Calories Burned ",
-        data: UserData.map((data) => data.caloiresBurned),
-        borderColor: "rgb(53, 162, 235)",
-        borderWidth: 2,
-        backgroundColor: "rgb(53, 162, 235)",
-      },
-    ],
-  });
 
   const handleSubmitWeight = async (event) => {
     event.preventDefault();
@@ -71,7 +47,89 @@ function Home() {
       console.error(err);
       alert(err.message);
     }
+
+    const querySnapshot = await getDocs(
+      collection(db, "users", user.email, "weights")
+    );
+    const saveFirebaseTodos = [];
+    querySnapshot.forEach((doc) => {
+      const tempMap = doc.data();
+      tempMap["id"] = doc.id;
+      tempMap["date"] = doc.id;
+      saveFirebaseTodos.push(tempMap);
+      console.log(tempMap);
+    });
+
+    var reformatedWeightsData = [];
+    for (var i = 0; i < saveFirebaseTodos.length; i++) {
+      reformatedWeightsData.push(saveFirebaseTodos[i]);
+      var dateStr = reformatedWeightsData[i]["id"];
+      const dateArr = dateStr.split("-");
+      const month = dateArr[0];
+      const day = dateArr[1];
+      const year = dateArr[2];
+      var reformatedDataStr = year + "-" + month + "-" + day;
+      reformatedWeightsData[i]["id"] = reformatedDataStr;
+    }
+    // console.log(reformatedWeightsData);
+    reformatedWeightsData.sort((a, b) => (a.id > b.id ? 1 : -1));
+    setSortedWeightsData(reformatedWeightsData);
+    console.log(reformatedWeightsData);
   };
+
+  const fetchWeights = async () => {
+    if (auth.currentUser && weightsData.length === 0) {
+      const querySnapshot = await getDocs(
+        collection(db, "users", user.email, "weights")
+      );
+      const saveFirebaseTodos = [];
+      querySnapshot.forEach((doc) => {
+        const tempMap = doc.data();
+        tempMap["id"] = doc.id;
+        tempMap["date"] = doc.id;
+        saveFirebaseTodos.push(tempMap);
+        console.log(tempMap);
+      });
+
+      setWeightsData(saveFirebaseTodos);
+    } else if (weightsData.length !== 0) {
+      //pulls all the dates and sorts them
+      console.log(weightsData);
+      console.log("hi");
+
+      var reformatedWeightsData = [];
+      for (var i = 0; i < weightsData.length; i++) {
+        reformatedWeightsData.push(weightsData[i]);
+        var dateStr = reformatedWeightsData[i]["id"];
+        const dateArr = dateStr.split("-");
+        const month = dateArr[0];
+        const day = dateArr[1];
+        const year = dateArr[2];
+        var reformatedDataStr = year + "-" + month + "-" + day;
+        reformatedWeightsData[i]["id"] = reformatedDataStr;
+      }
+      // console.log(reformatedWeightsData);
+      reformatedWeightsData.sort((a, b) => (a.id > b.id ? 1 : -1));
+      setSortedWeightsData(reformatedWeightsData);
+      console.log(reformatedWeightsData);
+    }
+  };
+
+  const fetchCalorieGoal = async () => {
+    const docRef = await getDoc(doc(db, "users", user.email));
+
+    if (docRef.exists()) {
+      setCalorieGoal(docRef.data()["calorieGoal"]);
+    }
+  };
+
+  useEffect(() => {
+    //Load data from backend
+    if (auth.currentUser) {
+      fetchWeights();
+      fetchCalorieGoal();
+    }
+  }, [loading, weightsData]);
 
   return (
     <div className="fixed">
@@ -190,7 +248,7 @@ function Home() {
             </div>
 
             <div className="create button">
-              <button onClick={handleSubmitWeight}> Add Information </button>
+              <button onClick={handleSubmitWeight}> Update Info </button>
             </div>
           </div>
 
@@ -198,12 +256,8 @@ function Home() {
             <div className="caloriesRemaining">
               <div className="yourDailyCalorieCount">
                 {" "}
-                Your Daily Calorie Count{" "}
+                Your Daily Calorie Count Goal: {calorieGoal}
               </div>
-
-              <div className="goalANDremaining">GOAL:</div>
-
-              <div className="goalANDremaining">Calories Consumed:</div>
             </div>
           </div>
         </div>
@@ -215,7 +269,20 @@ function Home() {
           className="yellowBox"
         >
           <div className="graphTitle"> Your Fitness Summary </div>
-          <LineChart chartData={userData} />
+          <LineChart
+            chartData={{
+              labels: sortedWeightsData.map((data) => data["date"]),
+              datasets: [
+                {
+                  label: "Weight (lbs)",
+                  data: sortedWeightsData.map((data) => data["weight"]),
+                  borderColor: "rgba(255, 99, 132)",
+                  borderWidth: 2,
+                  backgroundColor: "rgba(255, 99, 132)",
+                },
+              ],
+            }}
+          />
         </div>
       </>
     </div>

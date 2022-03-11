@@ -79,6 +79,7 @@ function Profile() {
         weight: result.weight,
         height: result.height,
         calorieGoal: result.calorieGoal,
+        bio: result.bio,
       });
     }
     setEditingMode(false);
