@@ -24,7 +24,7 @@ MenuItems.js gives each page a url, so that you can visit each page with a diffe
 
 Login.js is used for the login page once someone has already made an account
 
-Register.js is used for the register page and provides data unqiue to each user
+Register.js is used for the register page and provides data unique to each user
 
 ## Running the Application 
 1. Install Node.js (https://nodejs.org/en/) 
